@@ -1,5 +1,6 @@
+import Input from '~/components/Input';
 function Home() {
-    return <h1>Home page</h1>;
+    return <Input type="text" placeholder="hello" />;
 }
 
 export default Home;
