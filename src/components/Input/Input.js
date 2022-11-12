@@ -3,7 +3,7 @@ import styles from './Input.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Input({ textArea, borderRadius, ...passProps }) {
+function Input({ label = false, noLabel = false, border = false, textArea, rounded, ...passProps }) {
     let Input = 'input';
     if (textArea) {
         Input = 'textarea';
@@ -11,11 +11,17 @@ function Input({ textArea, borderRadius, ...passProps }) {
 
     const props = { ...passProps };
 
-    const classnames = cx('wrapper', {
-        borderRadius,
+    const classnames = cx('input', {
+        rounded,
+        border,
     });
 
-    return <Input className={classnames} {...props}></Input>;
+    return (
+        <div className={cx('wrapper')}>
+            {label && <label className={cx('label')}>{label}</label>}
+            <Input className={classnames} {...props}></Input>
+        </div>
+    );
 }
 
 export default Input;

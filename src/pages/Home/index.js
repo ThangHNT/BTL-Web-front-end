@@ -1,6 +1,11 @@
-import Input from '~/components/Input';
+import Header from '~/layouts/Header';
+import Container from '~/layouts/Container';
 function Home() {
-    return <Input type="text" placeholder="hello" />;
+    return (
+        <Container>
+            <Header></Header>
+        </Container>
+    );
 }
 
 export default Home;
