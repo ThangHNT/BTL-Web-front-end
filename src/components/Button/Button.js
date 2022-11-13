@@ -9,13 +9,16 @@ function Button({
     href,
     onClick,
     children,
-    leftIcon,
+    icon,
+    title,
     medium = false,
     small = false,
     large = false,
     primary = false,
     secondary = false,
+    basic = false,
     circle = false,
+    border = false,
     ...passProps
 }) {
     let Btn = 'button';
@@ -35,11 +38,13 @@ function Button({
         circle,
         primary,
         secondary,
+        basic,
+        border,
     });
 
     return (
         <Btn {...props} className={classnames}>
-            {leftIcon && <span className={cx('icon')}></span>}
+            {icon && <span className={cx('icon')}>{icon}</span>}
             <span className={cx('title')}>{children}</span>
         </Btn>
     );
