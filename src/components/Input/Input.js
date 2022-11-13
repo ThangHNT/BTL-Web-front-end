@@ -3,7 +3,7 @@ import styles from './Input.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Input({ label = false, noLabel = false, border = false, textArea, rounded, ...passProps }) {
+function Input({ label = false, noLabel = false, noBorder = false, border = false, textArea, rounded, ...passProps }) {
     let Input = 'input';
     if (textArea) {
         Input = 'textarea';
@@ -14,6 +14,7 @@ function Input({ label = false, noLabel = false, border = false, textArea, round
     const classnames = cx('input', {
         rounded,
         border,
+        noBorder,
     });
 
     return (

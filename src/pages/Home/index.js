@@ -1,9 +1,22 @@
-import Header from '~/layouts/Header';
+import { useContext, useLayoutEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Container from '~/layouts/Container';
+import Header from '~/layouts/Header';
+import { UserContext } from '~/components/context/UserContext';
+
 function Home() {
+    const { currentUser } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    useLayoutEffect(() => {
+        if (currentUser) {
+            navigate('/home');
+        }
+        // eslint-disable-next-line
+    });
     return (
         <Container>
-            <Header></Header>
+            <Header login={false} register={false} search={true}></Header>
         </Container>
     );
 }

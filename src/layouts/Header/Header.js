@@ -11,7 +11,7 @@ import { faRightFromBracket, faRightToBracket, faUser, faUserPlus } from '@forta
 
 const cx = classNames.bind(styles);
 
-function Header({ currentUser = false, login = false, register = false }) {
+function Header({ currentUser = false, login = false, register = false, search = false }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('logo')}>
@@ -23,7 +23,7 @@ function Header({ currentUser = false, login = false, register = false }) {
                     />
                 </Link>
             </div>
-            {!login && !register && (
+            {search && (
                 <div className={cx('search')}>
                     <Search />
                 </div>
@@ -42,7 +42,7 @@ function Header({ currentUser = false, login = false, register = false }) {
                                 </div>
                                 <div className={cx('btn-item')}>
                                     <Button
-                                        href="/logout"
+                                        href="/login"
                                         secondary
                                         medium
                                         icon={<FontAwesomeIcon icon={faRightFromBracket} />}
@@ -54,13 +54,16 @@ function Header({ currentUser = false, login = false, register = false }) {
                             </div>
                         )}
                     >
-                        <div className={cx('user-avatar')}>
-                            <Image
-                                src="https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-4k-01.jpg"
-                                logo
-                                circle
-                                avatar
-                            />
+                        <div className={cx('user-info')}>
+                            <span className={cx('user-name')}>Thang</span>
+                            <div className={cx('user-avatar')}>
+                                <Image
+                                    src="https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-4k-01.jpg"
+                                    logo
+                                    circle
+                                    avatar
+                                />
+                            </div>
                         </div>
                     </Tippy>
                 ) : (

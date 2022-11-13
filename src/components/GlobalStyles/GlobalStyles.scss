@@ -9,6 +9,7 @@
     --basic-hover: #5a6268;
     --danger: #dc3545;
     --danger-hover: #c82333;
+    --header-distance: 74px;
 }
 
 * {
@@ -20,4 +21,9 @@
 html {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+    line-height: 1.5;
 }

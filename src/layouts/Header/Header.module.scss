@@ -4,14 +4,28 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 10px;
+    padding: 10px 15% 0 15%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
 }
 
 .search {
     width: 60%;
 }
 
-.user-avatar {
+.user-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 15px;
+    user-select: none;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 }
 

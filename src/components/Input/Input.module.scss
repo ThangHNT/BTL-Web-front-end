@@ -22,9 +22,14 @@
 
 .label {
     font-size: 16px;
-    min-width: 80px;
+    min-width: 100px;
+    user-select: none;
 }
 
 .border {
     border-radius: 8px;
+}
+
+.noBorder {
+    border: none;
 }
