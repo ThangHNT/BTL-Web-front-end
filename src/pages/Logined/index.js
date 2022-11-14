@@ -13,10 +13,10 @@ function Logined() {
             navigate('/');
         }
         // eslint-disable-next-line
-    });
+    }, []);
     return (
         <Container>
-            <Header currentUser={true} search={true}></Header>
+            <Header link={false} currentUser={true} search={true}></Header>
             <HomeContent />
         </Container>
     );

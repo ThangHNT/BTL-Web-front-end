@@ -5,7 +5,7 @@ import styles from './Image.module.scss';
 const cx = classNames.bind(styles);
 
 function Image(
-    { src, alt = '', rounded = false, coverImgae = false, avatar = false, circle = false, logo = false },
+    { src, alt = '', rounded = false, book = false, coverImgae = false, avatar = false, circle = false, logo = false },
     ref,
 ) {
     const imageRef = useRef();
@@ -22,6 +22,7 @@ function Image(
         logo,
         avatar,
         coverImgae,
+        book,
     });
 
     return <img ref={imageRef} className={classes} src={src} alt={alt}></img>;

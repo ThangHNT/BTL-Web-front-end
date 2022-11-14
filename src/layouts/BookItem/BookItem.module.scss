@@ -1,0 +1,38 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-decoration: none;
+    color: #000;
+    min-width: var(--with-book-item);
+    padding: 5px 5px 10px 5px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    max-width: calc(var(--with-book-item) + 10px);
+    &:hover {
+        border-color: var(--primary);
+        transform: scale(1.02);
+    }
+}
+
+.introduction {
+    width: 100%;
+    p {
+        max-width: 160px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
+.introduction-title {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.introduction-author,
+.introduction-category {
+    font-size: 14px;
+}

@@ -11,13 +11,14 @@ import { faRightFromBracket, faRightToBracket, faUser, faUserPlus } from '@forta
 
 const cx = classNames.bind(styles);
 
-function Header({ currentUser = false, login = false, register = false, search = false }) {
+function Header({ link = true, currentUser = false, login = false, register = false, search = false }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('logo')}>
-                <Link to="/">
+                <Link to={link ? '/' : '#'}>
                     <Image
-                        src="https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-4k-01.jpg"
+                        // src="https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-4k-01.jpg"
+                        src="/logo.png"
                         logo
                         circle
                     />
