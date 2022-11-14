@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './Button.module.scss';
@@ -50,4 +51,4 @@ function Button({
     );
 }
 
-export default Button;
+export default memo(Button);

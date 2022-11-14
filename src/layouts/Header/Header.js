@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
-import React from 'react';
+import React, { memo } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from '~/components/Image';
@@ -95,4 +95,4 @@ function Header({ currentUser = false, login = false, register = false, search =
     );
 }
 
-export default Header;
+export default memo(Header);

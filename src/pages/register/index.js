@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Form from '~/components/Form';
 import Container from '~/layouts/Container';
 import Header from '~/layouts/Header';
@@ -45,6 +47,16 @@ const inputs = [
 ];
 
 function Register() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        let user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            navigate('/home');
+        }
+        // eslint-disable-next-line
+    });
+
     return (
         <div>
             <Container>

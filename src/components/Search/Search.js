@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import classNames from 'classnames/bind';
 import Input from '~/components/Input';
 import styles from './Search.module.scss';
@@ -15,4 +16,4 @@ function Search() {
     );
 }
 
-export default Search;
+export default memo(Search);

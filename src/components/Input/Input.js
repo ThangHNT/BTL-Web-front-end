@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Input.module.scss';
 
@@ -25,4 +26,4 @@ function Input({ label = false, noLabel = false, noBorder = false, border = fals
     );
 }
 
-export default Input;
+export default memo(Input);

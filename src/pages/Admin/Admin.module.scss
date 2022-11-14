@@ -1,0 +1,26 @@
+.content {
+    margin-top: var(--header-distance);
+    width: 100%;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.column {
+    width: 40%;
+}
+
+.form {
+    width: 100%;
+}
+
+.text-input {
+    width: 60%;
+}
+
+.header-title {
+    margin-bottom: 15px;
+}

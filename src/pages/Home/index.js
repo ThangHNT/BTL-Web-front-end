@@ -16,7 +16,7 @@ function Home() {
     });
     return (
         <Container>
-            <Header login={false} register={false} search={true}></Header>
+            <Header login={true} register={true} search={true}></Header>
         </Container>
     );
 }

@@ -1,4 +1,5 @@
-import { useState, useRef } from 'react';
+import { useState, memo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import host from '~/ulties/host';
 import classNames from 'classnames/bind';
@@ -12,21 +13,22 @@ const cx = classNames.bind(styles);
 
 function Form({ inputs, type }) {
     const [userInfo, setUserInfo] = useState({});
-    const checkInputRef = useRef(true);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (checkInputRef.current) {
+        if (handleCheckInputs(type)) {
             const { data } = await axios.post(`${host}/user/${type}`, userInfo);
             if (data.status) {
-                console.log(data);
+                // console.log(data);
                 toast.success('Chuyển hướng đến trang chủ.');
                 localStorage.setItem('user', JSON.stringify(data.user));
+                setTimeout(() => {
+                    navigate('/home');
+                }, 2500);
             } else {
                 toast.error(data.msg);
             }
-        } else {
-            console.log('no');
         }
     };
 
@@ -38,17 +40,18 @@ function Form({ inputs, type }) {
         });
     };
 
-    const handleBlur = (e) => {
-        checkInputRef.current = true;
-        const target = e.target;
-        // if (target.name === 'password' && target.value.length < 8) {
-        //     toast.warning('Mật khẩu tối thiểu 8 ký tự.');
-        //     checkInputRef.current = false;
-        // }
-        if (target.name === 'confirmPassword' && target.value !== userInfo.password) {
-            toast.warning('Mật khẩu chưa trùng khớp.');
-            checkInputRef.current = false;
+    const handleCheckInputs = (type) => {
+        if (type === 'register') {
+            if (userInfo.password.length < 8) {
+                toast.error('Mật khẩu yếu.');
+                return false;
+            }
+            if (userInfo.password !== userInfo.confirmPassword) {
+                toast.error('Mật khẩu chưa trùng khớp.');
+                return false;
+            }
         }
+        return true;
     };
 
     return (
@@ -68,7 +71,6 @@ function Form({ inputs, type }) {
                             accept="image/*"
                             required={input.required}
                             onInput={handleChangeInput}
-                            onBlur={handleBlur}
                         />
                     </div>
                 ))}
@@ -92,4 +94,4 @@ function Form({ inputs, type }) {
     );
 }
 
-export default Form;
+export default memo(Form);

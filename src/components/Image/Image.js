@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Image.module.scss';
 
@@ -14,4 +15,4 @@ function Image({ src, alt = '', rounded = false, avatar = false, circle = false,
     return <img className={classes} src={src} alt={alt}></img>;
 }
 
-export default Image;
+export default memo(Image);

@@ -26,7 +26,7 @@ function Login() {
             navigate('/home');
         }
         // eslint-disable-next-line
-    });
+    }, [currentUser]);
 
     return (
         <div>
