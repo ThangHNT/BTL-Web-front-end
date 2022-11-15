@@ -11,7 +11,7 @@ import { faRightFromBracket, faRightToBracket, faUser, faUserPlus } from '@forta
 
 const cx = classNames.bind(styles);
 
-function Header({ link = true, currentUser = false, login = false, register = false, search = false }) {
+function Header({ link = true, title = false, currentUser = false, login = false, register = false, search = false }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('logo')}>
@@ -29,6 +29,7 @@ function Header({ link = true, currentUser = false, login = false, register = fa
                     <Search />
                 </div>
             )}
+            {title && <h1>Thư Viện Sách Online</h1>}
             <div className={cx('account')}>
                 {currentUser ? (
                     <Tippy

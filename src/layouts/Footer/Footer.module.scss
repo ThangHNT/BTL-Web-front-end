@@ -1,0 +1,15 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 40px;
+    margin: 30px;
+    padding: 20px;
+    flex-direction: column;
+    border-top: 1px solid #ccc;
+
+    span {
+        color: var(--primary);
+    }
+}

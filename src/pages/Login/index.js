@@ -31,7 +31,7 @@ function Login() {
     return (
         <div>
             <Container>
-                <Header login={true} />
+                <Header login={true} title />
                 <Form inputs={inputs} type={'login'} />
             </Container>
         </div>

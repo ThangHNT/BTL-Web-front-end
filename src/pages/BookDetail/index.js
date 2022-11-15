@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import Container from '~/layouts/Container';
 import Header from '~/layouts/Header';
 import { UserContext } from '~/components/context/UserContext';
-import HomeContent from '~/layouts/HomeContent';
+import BookDetail from '~/layouts/BookDetail';
 import Footer from '~/layouts/Footer';
 
-function Home() {
+function BookDetailPage() {
     const { currentUser } = useContext(UserContext);
     const navigate = useNavigate();
 
@@ -18,11 +18,11 @@ function Home() {
     });
     return (
         <Container>
-            <Header login={true} register={true} search={true}></Header>
-            <HomeContent />
+            <Header title></Header>
+            <BookDetail />
             <Footer />
         </Container>
     );
 }
 
-export default Home;
+export default BookDetailPage;

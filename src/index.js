@@ -5,13 +5,16 @@ import App from '~/App';
 import GlobalStyles from './components/GlobalStyles';
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from '~/components/context/UserContext';
+import { BookProvider } from '~/components/context/BookContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <GlobalStyles>
             <UserProvider>
-                <App />
+                <BookProvider>
+                    <App />
+                </BookProvider>
             </UserProvider>
         </GlobalStyles>
     </React.StrictMode>,
