@@ -4,11 +4,6 @@ const BookContext = createContext();
 
 function BookProvider({ children }) {
     const [bookList, setBookList] = useState(new Map());
-    const [bookId, setBookId] = useState();
-
-    const handleSetGetBookId = (bookId) => {
-        setBookId(bookId);
-    };
 
     const handleSetBookList = (bookList) => {
         bookList.forEach((item) => {
@@ -28,9 +23,7 @@ function BookProvider({ children }) {
 
     const values = {
         bookList,
-        bookId,
         handleSetBookList,
-        handleSetGetBookId,
     };
 
     return <BookContext.Provider value={values}>{children}</BookContext.Provider>;

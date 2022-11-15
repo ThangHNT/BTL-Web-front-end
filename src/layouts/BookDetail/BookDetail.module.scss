@@ -5,4 +5,71 @@
 
 .book-info {
     display: flex;
+    width: 100%;
+}
+
+.cover-image {
+    margin-right: 20px;
+    width: 35%;
+}
+
+.detail-info {
+    max-width: 65%;
+}
+
+.detail-info-item {
+    display: flex;
+
+    .attribute {
+        font-weight: 600;
+        margin-right: 5px;
+    }
+}
+
+.detail-info-item + .detail-info-item {
+    margin-top: 15px;
+}
+
+.title {
+    font-weight: 650;
+    color: var(--primary);
+}
+
+.author {
+    font-style: italic;
+}
+
+.description {
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.user-actions {
+    margin-top: 30px;
+}
+
+.buy-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vote {
+    display: flex;
+}
+
+.evaluate-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 20px;
+    min-width: 80px;
+}
+
+.star {
+    cursor: pointer;
+}
+
+.fullStar {
+    color: orange;
 }
