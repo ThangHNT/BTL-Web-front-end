@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import host from '~/ulties/host';
@@ -9,12 +9,33 @@ import Image from '~/components/Image';
 import Button from '~/components/Button';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as fullStar } from '@fortawesome/free-solid-svg-icons';
+import Input from '~/components/Input';
 
 const cx = classNames.bind(styles);
 
+const fullStarArr = [
+    { star: <FontAwesomeIcon className={cx('star', { fullStar: true })} icon={fullStar} /> },
+    { star: <FontAwesomeIcon className={cx('star', { fullStar: true })} icon={fullStar} /> },
+    { star: <FontAwesomeIcon className={cx('star', { fullStar: true })} icon={fullStar} /> },
+    { star: <FontAwesomeIcon className={cx('star', { fullStar: true })} icon={fullStar} /> },
+    { star: <FontAwesomeIcon className={cx('star', { fullStar: true })} icon={fullStar} /> },
+];
+
+const emptyStarArr = [
+    { star: <FontAwesomeIcon className={cx('star')} icon={faStar} /> },
+    { star: <FontAwesomeIcon className={cx('star')} icon={faStar} /> },
+    { star: <FontAwesomeIcon className={cx('star')} icon={faStar} /> },
+    { star: <FontAwesomeIcon className={cx('star')} icon={faStar} /> },
+    { star: <FontAwesomeIcon className={cx('star')} icon={faStar} /> },
+];
+
 function BookDetail() {
-    const [book, setBook] = useState();
     const location = useLocation();
+    const [book, setBook] = useState();
+    const [changeStar, setChangeStar] = useState(false);
+
+    const fullStarRef = useRef([]);
+    const emptyStarRef = useRef(emptyStarArr);
 
     useEffect(() => {
         let bookId = location.pathname.split('/')[3];
@@ -31,6 +52,33 @@ function BookDetail() {
             .catch((err) => console.log(err));
         // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {}, [changeStar]);
+
+    const handleChangeStarArr = (e) => {
+        const target = e.currentTarget;
+        let fullStarLength = fullStarRef.current.length;
+        // let emptyStarLength = emptyStarRef.current.length;
+        let index = Number(target.getAttribute('index'));
+        let type = target.getAttribute('type');
+        if (type === 'empty-star') {
+            let arr1 = fullStarArr.slice(0, index + fullStarLength + 1);
+            let arr2 = emptyStarArr.slice(arr1.length, 5);
+            fullStarRef.current = arr1;
+            emptyStarRef.current = arr2;
+        } else {
+            if (index <= 1 && fullStarLength === 1) {
+                emptyStarRef.current = emptyStarArr;
+                fullStarRef.current = [];
+            } else {
+                let arr1 = fullStarArr.slice(0, index + 1);
+                let arr2 = emptyStarArr.slice(index + 1, 5);
+                emptyStarRef.current = arr2;
+                fullStarRef.current = arr1;
+            }
+        }
+        setChangeStar((pre) => !pre);
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -99,30 +147,42 @@ function BookDetail() {
                         <div className={cx('evaluate')}>
                             <div className={cx('vote')}>
                                 <span className={cx('evaluate-title')}>Đánh giá</span>
-                                <div className={cx('star-item')}>
-                                    <FontAwesomeIcon className={cx('star')} icon={faStar} />
-                                    <FontAwesomeIcon className={cx('star', { fullStar: true })} icon={fullStar} />
-                                </div>
-                                <div className={cx('star-item')}>
-                                    <FontAwesomeIcon className={cx('star')} icon={faStar} />
-                                    <FontAwesomeIcon className={cx('star', { fullStar: true })} icon={fullStar} />
-                                </div>
-                                <div className={cx('star-item')}>
-                                    <FontAwesomeIcon className={cx('star')} icon={faStar} />
-                                    <FontAwesomeIcon className={cx('star', { fullStar: true })} icon={fullStar} />
-                                </div>
-                                <div className={cx('star-item')}>
-                                    <FontAwesomeIcon className={cx('star')} icon={faStar} />
-                                    <FontAwesomeIcon className={cx('star', { fullStar: true })} icon={fullStar} />
-                                </div>
-                                <div className={cx('star-item')}>
-                                    <FontAwesomeIcon className={cx('star')} icon={faStar} />
-                                    <FontAwesomeIcon className={cx('star', { fullStar: true })} icon={fullStar} />
-                                </div>
+                                {fullStarRef.current.map((item, index) => {
+                                    return (
+                                        <div
+                                            key={index}
+                                            type="full-star"
+                                            index={index}
+                                            className={cx('star-item')}
+                                            onClick={handleChangeStarArr}
+                                        >
+                                            {item.star}
+                                        </div>
+                                    );
+                                })}
+                                {emptyStarRef.current.map((item, index) => {
+                                    return (
+                                        <div
+                                            key={index}
+                                            type="empty-star"
+                                            index={index}
+                                            className={cx('star-item')}
+                                            onClick={handleChangeStarArr}
+                                        >
+                                            {item.star}
+                                        </div>
+                                    );
+                                })}
                             </div>
                             <div className={cx('comment')}>
                                 <span className={cx('evaluate-title')}>Bình luận</span>
+                                <div className={cx('input-comment')}>
+                                    <Input border rows="5" maxLength="500" textArea></Input>
+                                </div>
                             </div>
+                            <Button secondary border large>
+                                Gửi đánh giá và bình luận
+                            </Button>
                         </div>
                     </div>
                 </div>

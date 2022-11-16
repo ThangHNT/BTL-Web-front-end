@@ -12,7 +12,7 @@ function BookDetailPage() {
 
     useLayoutEffect(() => {
         if (currentUser) {
-            navigate('/home');
+            // navigate('/home');
         }
         // eslint-disable-next-line
     });

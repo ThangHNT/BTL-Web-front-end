@@ -55,6 +55,10 @@
     justify-content: center;
 }
 
+.evaluate {
+    margin-top: 15px;
+}
+
 .vote {
     display: flex;
 }
@@ -66,10 +70,27 @@
     min-width: 80px;
 }
 
+.star-item {
+    margin: 0 2px;
+}
+
 .star {
     cursor: pointer;
 }
 
 .fullStar {
     color: orange;
+}
+
+.comment {
+    display: flex;
+    margin: 20px 0;
+}
+
+.evaluate-title {
+    user-select: none;
+}
+
+.input-comment {
+    width: 50%;
 }
