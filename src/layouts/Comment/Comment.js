@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
@@ -13,12 +13,14 @@ function Comment({ bookId }) {
     const [userComment, setUserComment] = useState();
 
     useLayoutEffect(() => {
-        // axios
-        //     .get(`${host}/comment/all`, { bookId })
-        //     .then(({ data }) => {
-        //         console.log(data);
-        //     })
-        //     .catch((err) => console.log('loi lay comments'));
+        if (bookId) {
+            axios
+                .get(`${host}/comment/get-all/${bookId}`)
+                .then(({ data }) => {
+                    console.log(data);
+                })
+                .catch((err) => console.log('loi lay comments'));
+        }
         // eslint-disable-next-line
     }, []);
 
@@ -80,4 +82,4 @@ function Comment({ bookId }) {
     );
 }
 
-export default Comment;
+export default memo(Comment);

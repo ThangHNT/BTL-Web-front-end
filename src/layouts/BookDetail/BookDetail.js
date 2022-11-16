@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, memo } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import host from '~/ulties/host';
@@ -34,6 +34,7 @@ function BookDetail() {
     const location = useLocation();
     const [book, setBook] = useState();
     const [changeStar, setChangeStar] = useState(false);
+    const [commentContent, setCommentContent] = useState();
 
     const fullStarRef = useRef([]);
     const emptyStarRef = useRef(emptyStarArr);
@@ -78,6 +79,22 @@ function BookDetail() {
                 fullStarRef.current = arr1;
             }
         }
+        setChangeStar((pre) => !pre);
+    };
+
+    const handleChangeInput = (e) => {
+        setCommentContent(e.target.value);
+    };
+
+    const handleSendEvaluate = () => {
+        if (fullStarRef.current.length < 1) {
+            alert('Bạn hãy đánh giá sao cho sách!');
+            return;
+        }
+        setCommentContent('');
+        let arr = emptyStarArr.slice(0, 5);
+        fullStarRef.current = [];
+        emptyStarRef.current = arr;
         setChangeStar((pre) => !pre);
     };
 
@@ -179,13 +196,22 @@ function BookDetail() {
                                 <div className={cx('write-comment')}>
                                     <span className={cx('evaluate-title')}>Bình luận</span>
                                     <div className={cx('input-comment')}>
-                                        <Input border rows="5" maxLength="500" textArea></Input>
+                                        <Input
+                                            value={commentContent}
+                                            border
+                                            rows="5"
+                                            maxLength="500"
+                                            textArea
+                                            onChange={handleChangeInput}
+                                        ></Input>
                                     </div>
-                                </div>
-                                <div className={cx('send-comment-btn')}>
-                                    <Button secondary border large>
-                                        Gửi đánh giá và bình luận
-                                    </Button>
+                                    {(commentContent || fullStarRef.current.length > 0) && (
+                                        <div className={cx('send-comment-btn')}>
+                                            <Button secondary border large onClick={handleSendEvaluate}>
+                                                Gửi đánh giá và bình luận
+                                            </Button>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className={cx('user-comments')}>
                                     <Comment bookId={bookIdRef.current} />
@@ -199,4 +225,4 @@ function BookDetail() {
     );
 }
 
-export default BookDetail;
+export default memo(BookDetail);

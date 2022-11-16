@@ -94,7 +94,17 @@
 }
 
 .send-comment-btn {
-    margin-top: 15px;
+    margin-left: 15px;
+    animation: displayBtn 0.25s linear;
+}
+
+@keyframes displayBtn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .input-comment {
