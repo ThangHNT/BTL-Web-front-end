@@ -1,27 +1,27 @@
-import classNames from 'classnames/bind';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import React, { memo } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames/bind';
+import styles from './Header.module.scss';
 import Image from '~/components/Image';
 import Search from '~/components/Search';
-import styles from './Header.module.scss';
 import Button from '~/components/Button';
 import { faRightFromBracket, faRightToBracket, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
 function Header({ link = true, title = false, currentUser = false, login = false, register = false, search = false }) {
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+    };
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('logo')}>
                 <Link to={link ? '/' : '#'}>
-                    <Image
-                        // src="https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-4k-01.jpg"
-                        src="/logo.png"
-                        logo
-                        circle
-                    />
+                    <Image src="/logo.png" logo circle />
                 </Link>
             </div>
             {search && (
@@ -48,6 +48,7 @@ function Header({ link = true, title = false, currentUser = false, login = false
                                         secondary
                                         medium
                                         icon={<FontAwesomeIcon icon={faRightFromBracket} />}
+                                        onClick={handleLogout}
                                     >
                                         Đăng xuất
                                     </Button>
@@ -57,15 +58,14 @@ function Header({ link = true, title = false, currentUser = false, login = false
                         )}
                     >
                         <div className={cx('user-info')}>
-                            <span className={cx('user-name')}>Thang</span>
-                            <div className={cx('user-avatar')}>
-                                <Image
-                                    src="https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-4k-01.jpg"
-                                    logo
-                                    circle
-                                    avatar
-                                />
-                            </div>
+                            {currentUser && (
+                                <>
+                                    <span className={cx('user-name')}>{currentUser.account}</span>
+                                    <div className={cx('user-avatar')}>
+                                        <Image src={currentUser.avatar} logo circle avatar />
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </Tippy>
                 ) : (
@@ -85,7 +85,7 @@ function Header({ link = true, title = false, currentUser = false, login = false
                         )}
                         {login && (
                             <div className={cx('login-btn-item')}>
-                                <Button to="/sign-up" basic border small icon={<FontAwesomeIcon icon={faUserPlus} />}>
+                                <Button to="/register" basic border small icon={<FontAwesomeIcon icon={faUserPlus} />}>
                                     Đăng ký
                                 </Button>
                             </div>

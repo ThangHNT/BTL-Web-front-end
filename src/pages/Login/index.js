@@ -1,9 +1,8 @@
-import { useContext, useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Form from '~/components/Form';
 import Container from '~/layouts/Container';
 import Header from '~/layouts/Header';
-import { UserContext } from '~/components/context/UserContext';
 
 const inputs = [
     { type: 'text', label: 'Account', placeholder: 'Tài khoản', name: 'account', maxlength: 30, required: true },
@@ -18,15 +17,15 @@ const inputs = [
 ];
 
 function Login() {
-    const { currentUser } = useContext(UserContext);
     const navigate = useNavigate();
 
     useLayoutEffect(() => {
+        let currentUser = JSON.parse(localStorage.getItem('user'));
         if (currentUser) {
             navigate('/home');
         }
         // eslint-disable-next-line
-    }, [currentUser]);
+    }, []);
 
     return (
         <div>

@@ -1,0 +1,34 @@
+.title {
+    font-size: 22px;
+    line-height: 1.5;
+    font-weight: 600;
+    user-select: none;
+    text-decoration: underline;
+}
+
+.star {
+    color: orange;
+}
+
+.comment-list {
+    margin-top: 15px;
+}
+
+.comment-item {
+    display: flex;
+}
+
+.comment-item + .comment-item {
+    margin-top: 10px;
+}
+
+.user-avatar {
+    margin-right: 10px;
+}
+
+.user-account {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.8;
+    margin-right: 10px;
+}

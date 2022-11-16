@@ -1,24 +1,22 @@
-import { useContext, useLayoutEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLayoutEffect, useState } from 'react';
 import Container from '~/layouts/Container';
 import Header from '~/layouts/Header';
-import { UserContext } from '~/components/context/UserContext';
 import BookDetail from '~/layouts/BookDetail';
 import Footer from '~/layouts/Footer';
 
 function BookDetailPage() {
-    const { currentUser } = useContext(UserContext);
-    const navigate = useNavigate();
+    const [currentUser, setCurrentUser] = useState(false);
 
     useLayoutEffect(() => {
-        if (currentUser) {
-            // navigate('/home');
+        let user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            setCurrentUser(user);
         }
-        // eslint-disable-next-line
-    });
+    }, []);
+
     return (
         <Container>
-            <Header title></Header>
+            <Header title currentUser={currentUser} register={!currentUser}></Header>
             <BookDetail />
             <Footer />
         </Container>

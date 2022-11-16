@@ -3,13 +3,14 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import host from '~/ulties/host';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar as fullStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-regular-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './BookDetail.module.scss';
 import Image from '~/components/Image';
 import Button from '~/components/Button';
-import { faStar } from '@fortawesome/free-regular-svg-icons';
-import { faStar as fullStar } from '@fortawesome/free-solid-svg-icons';
 import Input from '~/components/Input';
+import Comment from '~/layouts/Comment';
 
 const cx = classNames.bind(styles);
 
@@ -36,11 +37,11 @@ function BookDetail() {
 
     const fullStarRef = useRef([]);
     const emptyStarRef = useRef(emptyStarArr);
+    const bookIdRef = useRef(location.pathname.split('/')[3]);
 
     useEffect(() => {
-        let bookId = location.pathname.split('/')[3];
         axios
-            .get(`${host}/book/detail/?id=${bookId}`)
+            .get(`${host}/book/detail/?id=${bookIdRef.current}`)
             .then(({ data }) => {
                 // console.log(data);
                 if (data.status) {
@@ -175,14 +176,21 @@ function BookDetail() {
                                 })}
                             </div>
                             <div className={cx('comment')}>
-                                <span className={cx('evaluate-title')}>Bình luận</span>
-                                <div className={cx('input-comment')}>
-                                    <Input border rows="5" maxLength="500" textArea></Input>
+                                <div className={cx('write-comment')}>
+                                    <span className={cx('evaluate-title')}>Bình luận</span>
+                                    <div className={cx('input-comment')}>
+                                        <Input border rows="5" maxLength="500" textArea></Input>
+                                    </div>
+                                </div>
+                                <div className={cx('send-comment-btn')}>
+                                    <Button secondary border large>
+                                        Gửi đánh giá và bình luận
+                                    </Button>
+                                </div>
+                                <div className={cx('user-comments')}>
+                                    <Comment bookId={bookIdRef.current} />
                                 </div>
                             </div>
-                            <Button secondary border large>
-                                Gửi đánh giá và bình luận
-                            </Button>
                         </div>
                     </div>
                 </div>
