@@ -36,6 +36,7 @@ function BookDetail() {
     const [changeStar, setChangeStar] = useState(false);
     const [commentContent, setCommentContent] = useState();
 
+    const currentUserRef = useRef(JSON.parse(localStorage.getItem('user')));
     const fullStarRef = useRef([]);
     const emptyStarRef = useRef(emptyStarArr);
     const bookIdRef = useRef(location.pathname.split('/')[3]);
@@ -86,11 +87,19 @@ function BookDetail() {
         setCommentContent(e.target.value);
     };
 
-    const handleSendEvaluate = () => {
+    const handleSendEvaluate = async () => {
         if (fullStarRef.current.length < 1) {
             alert('Bạn hãy đánh giá sao cho sách!');
             return;
         }
+        const { data } = await axios.post(`${host}/evaluate/send`, {
+            star: fullStarRef.current.length,
+            user: currentUserRef.current.userId,
+            book: bookIdRef.current,
+            comment: commentContent,
+            time: new Date().getTime(),
+        });
+        if (!data.status) alert('Loi gui comment');
         setCommentContent('');
         let arr = emptyStarArr.slice(0, 5);
         fullStarRef.current = [];
