@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, memo } from 'react';
+import { useEffect, useState, useRef, memo, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import host from '~/ulties/host';
@@ -11,6 +11,7 @@ import Image from '~/components/Image';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 import Comment from '~/layouts/Comment';
+import { BookContext } from '~/components/context/BookContext';
 
 const cx = classNames.bind(styles);
 
@@ -21,7 +22,6 @@ const fullStarArr = [
     { star: <FontAwesomeIcon className={cx('star', { fullStar: true })} icon={fullStar} /> },
     { star: <FontAwesomeIcon className={cx('star', { fullStar: true })} icon={fullStar} /> },
 ];
-
 const emptyStarArr = [
     { star: <FontAwesomeIcon className={cx('star')} icon={faStar} /> },
     { star: <FontAwesomeIcon className={cx('star')} icon={faStar} /> },
@@ -31,6 +31,8 @@ const emptyStarArr = [
 ];
 
 function BookDetail() {
+    const { handleSetNewComment, handleSetConfirmLoginToBuy } = useContext(BookContext);
+
     const location = useLocation();
     const [book, setBook] = useState();
     const [changeStar, setChangeStar] = useState(false);
@@ -99,12 +101,24 @@ function BookDetail() {
             content: commentContent,
             time: new Date().getTime(),
         });
+        handleSetNewComment({
+            star: fullStarRef.current.length,
+            content: commentContent,
+            time: new Date().getTime(),
+            account: currentUserRef.current.account,
+            avatar: currentUserRef.current.avatar,
+        });
+
         if (!data.status) alert('Loi gui comment');
         setCommentContent('');
         let arr = emptyStarArr.slice(0, 5);
         fullStarRef.current = [];
         emptyStarRef.current = arr;
         setChangeStar((pre) => !pre);
+    };
+
+    const handleConfirmLoginToBuy = () => {
+        handleSetConfirmLoginToBuy(true);
     };
 
     return (
@@ -163,13 +177,29 @@ function BookDetail() {
                                     <span>{book.numberOfPage}</span>
                                 </p>
                             </div>
+                            <div className={cx('detail-info-item')}>
+                                <p>
+                                    <span className={cx('attribute')}>Còn lại: </span>
+                                    <span>{book.remains}</span>
+                                </p>
+                            </div>
+                            <div className={cx('detail-info-item')}>
+                                <p>
+                                    <span className={cx('attribute')}>Giá: </span>
+                                    <span className={cx('price')}>{book.price}</span>
+                                </p>
+                            </div>
                         </div>
                     </div>
                     <div className={cx('user-actions')}>
                         <div className={cx('buy-btn')}>
-                            <Button border primary veryLarge>
-                                Đặt mua ngay
-                            </Button>
+                            {book.remains < 1 ? (
+                                <span className={cx('sold-out')}>SÁCH ĐÃ BÁN HẾT</span>
+                            ) : (
+                                <Button border primary veryLarge onClick={handleConfirmLoginToBuy}>
+                                    Đặt mua ngay
+                                </Button>
+                            )}
                         </div>
                         <div className={cx('evaluate')}>
                             <div className={cx('vote')}>

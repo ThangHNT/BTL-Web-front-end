@@ -18,9 +18,11 @@ function Button({
     veryLarge = false,
     primary = false,
     secondary = false,
+    danger = false,
     basic = false,
     circle = false,
     border = false,
+    modal = false,
     ...passProps
 }) {
     let Btn = 'button';
@@ -43,6 +45,8 @@ function Button({
         secondary,
         basic,
         border,
+        danger,
+        modal,
     });
 
     return (

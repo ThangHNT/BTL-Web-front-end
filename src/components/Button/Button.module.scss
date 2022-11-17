@@ -55,6 +55,15 @@
     }
 }
 
+.danger {
+    background-color: var(--danger);
+    color: #fff;
+
+    &:hover {
+        background-color: var(--danger-hover);
+    }
+}
+
 .basic {
     background-color: var(--basic);
     color: #fff;
@@ -66,4 +75,8 @@
 
 .border {
     border-radius: 6px;
+}
+
+.modal {
+    padding: 10px 0;
 }

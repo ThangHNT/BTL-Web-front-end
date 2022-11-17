@@ -11,14 +11,13 @@ function Logined() {
 
     useEffect(() => {
         let user = JSON.parse(localStorage.getItem('user'));
-        console.log(user);
         if (!user) {
             navigate('/');
         } else {
             setCurrentUser(user);
         }
         // eslint-disable-next-line
-    }, [currentUser]);
+    }, []);
     return (
         <Container>
             <Header link={false} currentUser={currentUser} search={true}></Header>

@@ -1,15 +1,19 @@
-import { useState, useLayoutEffect, memo, useRef } from 'react';
+import { useState, useLayoutEffect, useEffect, memo, useRef, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import Tippy from '@tippyjs/react/headless';
 import axios from 'axios';
 import host from '~/ulties/host';
 import classNames from 'classnames/bind';
 import styles from './Comment.module.scss';
 import Image from '~/components/Image';
+import { BookContext } from '~/components/context/BookContext';
 
 const cx = classNames.bind(styles);
 
 function Comment({ bookId }) {
+    // console.log('Comment');
+    const { newComment, handleSetNewComment } = useContext(BookContext);
     const [userComment, setUserComment] = useState([]);
     const starRef = useRef([]);
 
@@ -29,11 +33,31 @@ function Comment({ bookId }) {
         // eslint-disable-next-line
     }, []);
 
+    useEffect(() => {
+        if (newComment) {
+            setUserComment((pre) => {
+                return [newComment, ...pre];
+            });
+            handleSetNewComment(false);
+        }
+        // eslint-disable-next-line
+    }, [newComment]);
+
     const handleGetStar = (numberOfStar) => {
         starRef.current = [];
         for (let i = 0; i < numberOfStar; i++) {
             starRef.current.push(0);
         }
+    };
+
+    const handleFormatTime = (milisecond) => {
+        let date = new Date(Number(milisecond));
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        return `${hour}:${minute} ${day}/${month}/${year}`;
     };
 
     return (
@@ -56,7 +80,16 @@ function Comment({ bookId }) {
                                 </div>
                             </div>
                             <div className={cx('comment-content')}>
-                                <p>{item.content}</p>
+                                <Tippy
+                                    placement="right"
+                                    render={(attrs) => (
+                                        <div className="comment-content-box" tabIndex="-1" {...attrs}>
+                                            {handleFormatTime(item.time)}
+                                        </div>
+                                    )}
+                                >
+                                    <p>{item.content}</p>
+                                </Tippy>
                             </div>
                         </div>
                     </div>

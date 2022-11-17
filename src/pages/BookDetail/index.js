@@ -3,6 +3,7 @@ import Container from '~/layouts/Container';
 import Header from '~/layouts/Header';
 import BookDetail from '~/layouts/BookDetail';
 import Footer from '~/layouts/Footer';
+import Modal from '~/layouts/Modal';
 
 function BookDetailPage() {
     const [currentUser, setCurrentUser] = useState(false);
@@ -19,6 +20,7 @@ function BookDetailPage() {
             <Header title currentUser={currentUser} register={!currentUser}></Header>
             <BookDetail />
             <Footer />
+            <Modal />
         </Container>
     );
 }
