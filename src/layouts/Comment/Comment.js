@@ -16,7 +16,7 @@ function Comment({ bookId }) {
     useLayoutEffect(() => {
         if (bookId) {
             axios
-                .get(`${host}/evaluate/get-all/${bookId}`)
+                .get(`${host}/comment/get-all/${bookId}`)
                 .then(({ data }) => {
                     // console.log(data.comments[0]);
                     if (!data.status) alert('Loi lay comments');
@@ -56,7 +56,7 @@ function Comment({ bookId }) {
                                 </div>
                             </div>
                             <div className={cx('comment-content')}>
-                                <p>{item.comment}</p>
+                                <p>{item.content}</p>
                             </div>
                         </div>
                     </div>

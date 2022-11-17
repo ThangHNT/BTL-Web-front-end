@@ -92,11 +92,11 @@ function BookDetail() {
             alert('Bạn hãy đánh giá sao cho sách!');
             return;
         }
-        const { data } = await axios.post(`${host}/evaluate/send`, {
+        const { data } = await axios.post(`${host}/comment/send`, {
             star: fullStarRef.current.length,
             user: currentUserRef.current.userId,
             book: bookIdRef.current,
-            comment: commentContent,
+            content: commentContent,
             time: new Date().getTime(),
         });
         if (!data.status) alert('Loi gui comment');

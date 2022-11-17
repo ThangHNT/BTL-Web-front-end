@@ -4,6 +4,9 @@ const BookContext = createContext();
 
 function BookProvider({ children }) {
     const [bookList, setBookList] = useState(new Map());
+    const [newComment, setNewComment] = useState();
+
+    const handleSetNewComment = () => {};
 
     const handleSetBookList = (bookList) => {
         bookList.forEach((item) => {

@@ -21,8 +21,14 @@ function Form({ inputs, type }) {
             const { data } = await axios.post(`${host}/user/${type}`, userInfo);
             if (data.status) {
                 // console.log(data);
-                toast.success('Chuyển hướng đến trang chủ.');
-                localStorage.setItem('user', JSON.stringify(data.user));
+                console.log(data);
+                if (type === 'register') {
+                    toast.success('Đăng ký thành công.Chuyển hướng đến trang chủ.');
+                    localStorage.setItem('user', JSON.stringify(data.newUser));
+                } else {
+                    toast.success('Chuyển hướng đến trang chủ.');
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                }
                 setTimeout(() => {
                     navigate('/home');
                 }, 2500);
@@ -42,10 +48,10 @@ function Form({ inputs, type }) {
 
     const handleCheckInputs = (type) => {
         if (type === 'register') {
-            if (userInfo.password.length < 8) {
-                toast.error('Mật khẩu yếu.');
-                return false;
-            }
+            // if (userInfo.password.length < 8) {
+            //     toast.error('Mật khẩu yếu.');
+            //     return false;
+            // }
             if (userInfo.password !== userInfo.confirmPassword) {
                 toast.error('Mật khẩu chưa trùng khớp.');
                 return false;
