@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Form from '~/components/Form';
 import Container from '~/layouts/Container';
@@ -19,7 +19,7 @@ const inputs = [
 function Login() {
     const navigate = useNavigate();
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         let currentUser = JSON.parse(localStorage.getItem('user'));
         if (currentUser) {
             navigate('/home');

@@ -21,7 +21,6 @@ function Form({ inputs, type }) {
             const { data } = await axios.post(`${host}/user/${type}`, userInfo);
             if (data.status) {
                 // console.log(data);
-                console.log(data);
                 if (type === 'register') {
                     toast.success('Đăng ký thành công.Chuyển hướng đến trang chủ.');
                     localStorage.setItem('user', JSON.stringify(data.newUser));

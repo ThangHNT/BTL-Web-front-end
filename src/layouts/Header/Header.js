@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import React, { memo } from 'react';
 import Tippy from '@tippyjs/react/headless';
