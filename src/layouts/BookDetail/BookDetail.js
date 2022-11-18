@@ -201,14 +201,14 @@ function BookDetail() {
                             <div className={cx('detail-info-item')}>
                                 <p>
                                     <span className={cx('attribute')}>Giá: </span>
-                                    <span className={cx('price')}>{book.price}</span>
+                                    <span className={cx('price')}>{book.price} VND</span>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div className={cx('user-actions')}>
                         <div className={cx('buy-btn')}>
-                            {book.remains < 1 ? (
+                            {book.quantity < 1 ? (
                                 <span className={cx('sold-out')}>SÁCH ĐÃ BÁN HẾT</span>
                             ) : (
                                 <Button border primary veryLarge onClick={handleConfirmLoginToBuy}>

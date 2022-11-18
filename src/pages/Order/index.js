@@ -17,7 +17,7 @@ function PaymentPage() {
     }, []);
     return (
         <Container>
-            <Header link="/home" currentUser={currentUserRef.current} />
+            <Header title link="/home" currentUser={currentUserRef.current} />
             <Payment currentUser={currentUserRef.current} />
             <Footer />
         </Container>

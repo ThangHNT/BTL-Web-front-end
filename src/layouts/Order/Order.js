@@ -13,8 +13,8 @@ const cx = classNames.bind(styles);
 const inputs = [
     {
         type: 'text',
-        label: 'Họ tên',
-        name: 'fullName',
+        label: 'Người nhận',
+        name: 'receiver',
         maxlength: 50,
         required: true,
     },
@@ -29,7 +29,7 @@ const inputs = [
         type: 'number',
         label: 'Số điện thoại',
         name: 'phoneNumber',
-        maxlength: 50,
+        maxlength: 13,
         required: true,
     },
     {
@@ -44,8 +44,9 @@ const inputs = [
 function Payment({ currentUser }) {
     const location = useLocation();
     const [book, setBook] = useState();
+    const [order, setOrder] = useState({ quantity: 0 });
+
     const bookIdRef = useRef(location.pathname.split('/')[3]);
-    const bookPriceRef = useRef();
 
     useLayoutEffect(() => {
         axios
@@ -54,7 +55,6 @@ function Payment({ currentUser }) {
                 // console.log(data);
                 if (data.status) {
                     setBook(data.book);
-                    bookPriceRef.current = data.book.price;
                 } else {
                     console.log('chua lay dc chi tiet sach');
                 }
@@ -64,11 +64,28 @@ function Payment({ currentUser }) {
 
     const handleSetTotalPrice = (e) => {
         let quantity = Number(e.target.value);
-        let totalPrice = quantity * Number(bookPriceRef.current);
-        setBook((pre) => {
-            pre.price = totalPrice > 0 ? totalPrice : bookPriceRef.current;
-            return { ...pre };
-        });
+        if (quantity > 0) {
+            let totalPrice = quantity * Number(book.price);
+            setOrder((pre) => {
+                pre.quantity = quantity;
+                pre.totalPrice = totalPrice;
+                return { ...pre };
+            });
+        } else {
+            setOrder((pre) => {
+                pre.quantity = quantity;
+                pre.totalPrice = 0;
+                return { ...pre };
+            });
+        }
+    };
+
+    const handleCheckQuantity = (e) => {
+        let quantity = Number(e.target.value);
+        if (quantity < 1) {
+            alert('Vui lòng chọn số lượng thích hợp.');
+            e.target.value = '';
+        }
     };
 
     return (
@@ -81,25 +98,37 @@ function Payment({ currentUser }) {
                                 <Image src={book.coverImage} alt="book-cover-image" book />
                             </div>
                             <p className={cx('book-title')}>{book.title}</p>
-                            <p className={cx('book-price')}>Giá : {bookPriceRef.current} VND</p>
+                            <p className={cx('book-price')}>Giá : {book.price} VND</p>
                         </div>
                         <div className={cx('book-select-quantity')}>
                             <Input
                                 type="number"
                                 label="Số lượng"
                                 border
-                                max="100"
-                                maxLength="3"
+                                min="1"
                                 onChange={handleSetTotalPrice}
+                                onBlur={handleCheckQuantity}
+                                required
                             />
                         </div>
                         <div className={cx('book-into-money')}>
                             Thành tiền:
-                            <p>{book.price} VND</p>
+                            <p>{order.totalPrice} VND</p>
                         </div>
                     </div>
                     <div className={cx('payment-area')}>
-                        <Form payment inputs={inputs} type="payment"></Form>
+                        <Form
+                            payment
+                            inputs={inputs}
+                            otherValues={{
+                                quantity: order.quantity,
+                                customer: currentUser.userId,
+                                book: bookIdRef.current,
+                                date: new Date().getTime(),
+                            }}
+                            type="order-book"
+                            path={`book/order/${bookIdRef.current}`}
+                        ></Form>
                     </div>
                 </div>
             )}

@@ -11,7 +11,7 @@ import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
-function Form({ inputs, type, payment = false, otherValue = false, title = false, path }) {
+function Form({ inputs, type, payment = false, otherValues = false, title = false, path }) {
     const [userInfo, setUserInfo] = useState({});
     const navigate = useNavigate();
 
@@ -19,29 +19,37 @@ function Form({ inputs, type, payment = false, otherValue = false, title = false
         e.preventDefault();
         if (handleCheckInputs(type)) {
             let formData;
-            if (otherValue) {
-                formData = { ...userInfo, ...otherValue };
+            if (otherValues) {
+                formData = { ...userInfo, ...otherValues };
             } else {
                 formData = { ...userInfo };
             }
-            // const { data } = await axios.post(`${host}/user/${type}`, formData);
+            // console.log(otherValues);
             const { data } = await axios.post(`${host}/${path}`, formData);
             if (data.status) {
                 // console.log(data);
                 if (type === 'register') {
                     toast.success('Đăng ký thành công.Chuyển hướng đến trang chủ.');
                     localStorage.setItem('user', JSON.stringify(data.newUser));
-                } else {
+                    handleNavigate('home');
+                } else if (type === 'register') {
                     toast.success('Chuyển hướng đến trang chủ.');
                     localStorage.setItem('user', JSON.stringify(data.user));
+                    handleNavigate('home');
+                } else if (type === 'order-book') {
+                    toast.success('Đặt sách thành công.');
+                    handleNavigate(`book/detail/${otherValues.book}`);
                 }
-                setTimeout(() => {
-                    navigate('/home');
-                }, 2500);
             } else {
                 toast.error(data.msg);
             }
         }
+    };
+
+    const handleNavigate = (path) => {
+        setTimeout(() => {
+            navigate(`/${path}`);
+        }, 2500);
     };
 
     const handleChangeInput = (e) => {
@@ -62,12 +70,15 @@ function Form({ inputs, type, payment = false, otherValue = false, title = false
                 toast.error('Mật khẩu chưa trùng khớp.');
                 return false;
             }
+        } else if (type === 'order-book' && otherValues.orderQuantity < 1) {
+            alert('Vui lòng chọn số lượng thích hợp.');
+            return false;
         }
         return true;
     };
 
     return (
-        <form className={cx('wrapper', { payment })} action={`/user/${type}`} onSubmit={handleSubmit}>
+        <form className={cx('wrapper', { payment })} onSubmit={handleSubmit}>
             {title && <span className={cx('title')}>{type}</span>}
             <div className={cx('content', { payment })}>
                 {inputs.map((input, index) => (
