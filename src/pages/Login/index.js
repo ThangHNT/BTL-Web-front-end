@@ -31,7 +31,7 @@ function Login() {
         <div>
             <Container>
                 <Header link="/" login={true} title />
-                <Form inputs={inputs} type={'login'} title />
+                <Form inputs={inputs} type={'login'} title path="user/login" />
             </Container>
         </div>
     );

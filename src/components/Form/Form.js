@@ -11,7 +11,7 @@ import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
-function Form({ inputs, type, payment = false, otherValue = false, title = false }) {
+function Form({ inputs, type, payment = false, otherValue = false, title = false, path }) {
     const [userInfo, setUserInfo] = useState({});
     const navigate = useNavigate();
 
@@ -24,7 +24,8 @@ function Form({ inputs, type, payment = false, otherValue = false, title = false
             } else {
                 formData = { ...userInfo };
             }
-            const { data } = await axios.post(`${host}/user/${type}`, formData);
+            // const { data } = await axios.post(`${host}/user/${type}`, formData);
+            const { data } = await axios.post(`${host}/${path}`, formData);
             if (data.status) {
                 // console.log(data);
                 if (type === 'register') {
@@ -68,7 +69,7 @@ function Form({ inputs, type, payment = false, otherValue = false, title = false
     return (
         <form className={cx('wrapper', { payment })} action={`/user/${type}`} onSubmit={handleSubmit}>
             {title && <span className={cx('title')}>{type}</span>}
-            <div className={cx('content')}>
+            <div className={cx('content', { payment })}>
                 {inputs.map((input, index) => (
                     <div key={index} className={cx('input-item')}>
                         <Input
@@ -88,7 +89,7 @@ function Form({ inputs, type, payment = false, otherValue = false, title = false
             </div>
             <div className={cx('btn')}>
                 <Button primary border large type="submit">
-                    {type === 'login' ? 'Đăng nhập' : type === 'register' ? 'Đăng ký' : 'Thanh toán'}
+                    {type === 'login' ? 'Đăng nhập' : type === 'register' ? 'Đăng ký' : 'Đặt sách'}
                 </Button>
             </div>
             <ToastContainer

@@ -1,0 +1,49 @@
+.wrapper {
+    margin-top: calc(var(--header-distance) + 30px);
+}
+
+.body {
+    display: flex;
+    align-items: flex-start;
+}
+
+.book {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.book-info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.book-title {
+    font-size: 18px;
+    color: red;
+    font-style: italic;
+}
+
+.book-select-quantity {
+    width: 60%;
+    margin: 15px 0;
+}
+
+.book-into-money {
+    display: flex;
+    font-size: 18px;
+
+    p {
+        margin-left: 8px;
+        color: var(--primary);
+        letter-spacing: 1px;
+    }
+}
+
+.payment-area {
+    // width: 50%;
+}

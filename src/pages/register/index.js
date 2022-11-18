@@ -61,7 +61,7 @@ function Register() {
         <div>
             <Container>
                 <Header link="/" register={true} />
-                <Form inputs={inputs} type={'register'} title />
+                <Form inputs={inputs} type={'register'} title path="user/register" />
             </Container>
         </div>
     );

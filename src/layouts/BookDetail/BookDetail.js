@@ -45,13 +45,13 @@ function BookDetail() {
 
     useEffect(() => {
         axios
-            .get(`${host}/book/detail/?id=${bookIdRef.current}`)
+            .get(`${host}/book/detail/${bookIdRef.current}`)
             .then(({ data }) => {
                 // console.log(data);
                 if (data.status) {
                     setBook(data.book);
                 } else {
-                    alert('Lỗi lấy sách');
+                    console.log('Lỗi lấy sách');
                 }
             })
             .catch((err) => console.log(err));
@@ -124,7 +124,7 @@ function BookDetail() {
 
     const handleConfirmLoginToBuy = () => {
         if (currentUserRef.current) {
-            navigate('/book/payment/' + bookIdRef.current);
+            navigate('/book/order/' + bookIdRef.current);
         } else {
             handleSetConfirmLoginToBuy({
                 title: 'Thanh toán',
@@ -194,7 +194,7 @@ function BookDetail() {
                             </div>
                             <div className={cx('detail-info-item')}>
                                 <p>
-                                    <span className={cx('attribute')}>Còn lại: </span>
+                                    <span className={cx('attribute')}>Còn lại: {book.quantity} </span>
                                     <span>{book.remains}</span>
                                 </p>
                             </div>

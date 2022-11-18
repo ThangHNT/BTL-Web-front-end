@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Container from '~/layouts/Container';
 import Footer from '~/layouts/Footer';
 import Header from '~/layouts/Header';
-import Payment from '~/layouts/Payment';
+import Payment from '~/layouts/Order';
 
 function PaymentPage() {
     const navigate = useNavigate();

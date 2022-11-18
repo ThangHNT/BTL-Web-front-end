@@ -68,7 +68,7 @@ function Home() {
 
     return (
         <Container>
-            <Header></Header>
+            <Header link="/home"></Header>
             <div className={cx('content')}>
                 <h1 className={cx('header-title')}>Thêm sách</h1>
                 <form ref={formRef} className={cx('form')} onSubmit={handleSubmit}>
@@ -139,6 +139,30 @@ function Home() {
                                         type="date"
                                         placeholder="Ngày phát hành"
                                         name="releaseDate"
+                                        border
+                                        required
+                                        onChange={handleSetInputValue}
+                                    />
+                                </div>
+                                <div className={cx('column')}>
+                                    <Input
+                                        label="Giá(VND)"
+                                        type="number"
+                                        placeholder="Giá"
+                                        name="price"
+                                        border
+                                        required
+                                        onChange={handleSetInputValue}
+                                    />
+                                </div>
+                            </div>
+                            <div className={cx('row')}>
+                                <div className={cx('column')}>
+                                    <Input
+                                        label="Số lượng"
+                                        type="number"
+                                        placeholder="Số lượng"
+                                        name="quantity"
                                         border
                                         required
                                         onChange={handleSetInputValue}
