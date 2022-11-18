@@ -70,7 +70,7 @@ function Form({ inputs, type, payment = false, otherValues = false, title = fals
                 toast.error('Mật khẩu chưa trùng khớp.');
                 return false;
             }
-        } else if (type === 'order-book' && otherValues.orderQuantity < 1) {
+        } else if (type === 'order-book' && otherValues.quantity < 1) {
             alert('Vui lòng chọn số lượng thích hợp.');
             return false;
         }

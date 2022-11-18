@@ -64,17 +64,11 @@ function Payment({ currentUser }) {
 
     const handleSetTotalPrice = (e) => {
         let quantity = Number(e.target.value);
-        if (quantity > 0) {
+        if (quantity > 0 && quantity <= book.quantity) {
             let totalPrice = quantity * Number(book.price);
             setOrder((pre) => {
                 pre.quantity = quantity;
                 pre.totalPrice = totalPrice;
-                return { ...pre };
-            });
-        } else {
-            setOrder((pre) => {
-                pre.quantity = quantity;
-                pre.totalPrice = 0;
                 return { ...pre };
             });
         }
@@ -85,6 +79,17 @@ function Payment({ currentUser }) {
         if (quantity < 1) {
             alert('Vui lòng chọn số lượng thích hợp.');
             e.target.value = '';
+            setOrder((pre) => {
+                pre.quantity = 0;
+                return { ...pre };
+            });
+        } else if (quantity > book.quantity) {
+            alert('Bạn đặt quá số lượng.');
+            e.target.value = '';
+            setOrder((pre) => {
+                pre.quantity = 0;
+                return { ...pre };
+            });
         }
     };
 
@@ -98,6 +103,7 @@ function Payment({ currentUser }) {
                                 <Image src={book.coverImage} alt="book-cover-image" book />
                             </div>
                             <p className={cx('book-title')}>{book.title}</p>
+                            <p>Còn lại: {book.quantity}</p>
                             <p className={cx('book-price')}>Giá : {book.price} VND</p>
                         </div>
                         <div className={cx('book-select-quantity')}>
