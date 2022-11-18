@@ -1,0 +1,12 @@
+.wrapper {
+    margin-top: calc(var(--header-distance) + 30px);
+    display: flex;
+}
+
+.book {
+    width: 50%;
+}
+
+.payment-area {
+    width: 50%;
+}

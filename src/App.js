@@ -6,6 +6,7 @@ import Logined from '~/pages/Logined';
 import Admin from '~/pages/Admin';
 import NotFound from '~/pages/NotFound';
 import BookDetail from '~/pages/BookDetail';
+import Payment from '~/pages/Payment';
 
 function App() {
     return (
@@ -17,6 +18,9 @@ function App() {
                     <Route path="/book">
                         <Route path="detail">
                             <Route path=":bookId" element={<BookDetail />} />
+                        </Route>
+                        <Route path="payment">
+                            <Route path=":bookId" element={<Payment />} />
                         </Route>
                     </Route>
                     <Route path="/login" element={<Login />} />

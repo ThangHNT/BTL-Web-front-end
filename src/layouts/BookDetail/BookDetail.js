@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef, memo, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useState, useRef, useCallback, memo, useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import host from '~/ulties/host';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,8 +32,8 @@ const emptyStarArr = [
 
 function BookDetail() {
     const { handleSetNewComment, handleSetConfirmLoginToBuy } = useContext(BookContext);
-
     const location = useLocation();
+    const navigate = useNavigate();
     const [book, setBook] = useState();
     const [changeStar, setChangeStar] = useState(false);
     const [commentContent, setCommentContent] = useState();
@@ -117,8 +117,23 @@ function BookDetail() {
         setChangeStar((pre) => !pre);
     };
 
+    const goToLoginPage = useCallback(() => {
+        return navigate('/login');
+        // eslint-disable-next-line
+    }, []);
+
     const handleConfirmLoginToBuy = () => {
-        handleSetConfirmLoginToBuy(true);
+        if (currentUserRef.current) {
+            navigate('/book/payment/' + bookIdRef.current);
+        } else {
+            handleSetConfirmLoginToBuy({
+                title: 'Thanh toán',
+                content: 'Bạn cần đăng nhập để mua sách',
+                rejectBtn: 'Hủy',
+                acceptBtn: 'Đăng nhập',
+                action: goToLoginPage,
+            });
+        }
     };
 
     return (

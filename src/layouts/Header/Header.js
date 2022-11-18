@@ -19,7 +19,7 @@ function Header({ link = true, title = false, currentUser = false, login = false
     return (
         <div className={cx('wrapper')}>
             <div className={cx('logo')}>
-                <Link to={link ? '/' : '#'}>
+                <Link to={link}>
                     <Image src="/logo.png" logo circle />
                 </Link>
             </div>

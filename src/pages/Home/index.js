@@ -17,7 +17,7 @@ function Home() {
     }, []);
     return (
         <Container>
-            <Header login={true} register={true} search={true}></Header>
+            <Header link="#" login={true} register={true} search={true}></Header>
             <HomeContent />
             <Footer />
         </Container>

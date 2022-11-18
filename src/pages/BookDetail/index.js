@@ -17,7 +17,7 @@ function BookDetailPage() {
 
     return (
         <Container>
-            <Header title currentUser={currentUser} register={!currentUser}></Header>
+            <Header link={currentUser ? '/home' : '/'} title currentUser={currentUser} register={!currentUser}></Header>
             <BookDetail />
             <Footer />
             <Modal />

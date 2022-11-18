@@ -1,3 +1,12 @@
+@keyframes display {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .modal,
 .overlay {
     position: fixed;
@@ -12,6 +21,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: display 0.25s linear;
 }
 
 .overlay {
@@ -73,6 +83,7 @@
 
     p {
         font-size: 16px;
+        font-family: 'Open Sans', sans-serif;
     }
 }
 

@@ -20,7 +20,7 @@ function Logined() {
     }, []);
     return (
         <Container>
-            <Header link={false} currentUser={currentUser} search={true}></Header>
+            <Header link="/home" currentUser={currentUser} search={true}></Header>
             <HomeContent />
             <Footer />
         </Container>

@@ -8,16 +8,23 @@ import { BookContext } from '~/components/context/BookContext';
 
 const cx = classNames.bind(styles);
 
-function Modal({ title = false, content = false, action = false, rejectBtn = false, acceptBtn = false }) {
-    const { confirmLoginToBuy, handleSetConfirmLoginToBuy } = useContext(BookContext);
+function Modal() {
+    const { confirmLoginToBuy } = useContext(BookContext);
+    const [modal, setModal] = useState();
+
+    useEffect(() => {
+        if (confirmLoginToBuy) {
+            setModal(confirmLoginToBuy);
+        }
+    }, [confirmLoginToBuy]);
 
     const handleCloseModal = () => {
-        handleSetConfirmLoginToBuy(false);
+        setModal(false);
     };
 
     return (
         <div className={cx('wrapper')}>
-            {confirmLoginToBuy && (
+            {modal && (
                 <div className={cx('modal')}>
                     <div className={cx('overlay')}></div>
                     <div className={cx('body')}>
@@ -28,19 +35,23 @@ function Modal({ title = false, content = false, action = false, rejectBtn = fal
                             </div>
                         </div>
                         <div className={cx('content')}>
-                            <p>Ban co muon thanh toan ko?</p>
+                            <p>{modal.content}</p>
                         </div>
                         <div className={cx('footer')}>
-                            <div className={cx('btn-item')}>
-                                <Button danger modal border onClick={handleCloseModal}>
-                                    Huy
-                                </Button>
-                            </div>
-                            <div className={cx('btn-item')}>
-                                <Button primary modal border>
-                                    oke
-                                </Button>
-                            </div>
+                            {modal.rejectBtn && (
+                                <div className={cx('btn-item')}>
+                                    <Button danger modal border onClick={handleCloseModal}>
+                                        {modal.rejectBtn}
+                                    </Button>
+                                </div>
+                            )}
+                            {modal.acceptBtn && (
+                                <div className={cx('btn-item')}>
+                                    <Button primary modal border onClick={modal.action}>
+                                        {modal.acceptBtn}
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

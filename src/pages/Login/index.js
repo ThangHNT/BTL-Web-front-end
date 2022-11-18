@@ -30,8 +30,8 @@ function Login() {
     return (
         <div>
             <Container>
-                <Header login={true} title />
-                <Form inputs={inputs} type={'login'} />
+                <Header link="/" login={true} title />
+                <Form inputs={inputs} type={'login'} title />
             </Container>
         </div>
     );

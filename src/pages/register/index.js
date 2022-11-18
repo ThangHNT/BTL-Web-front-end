@@ -60,8 +60,8 @@ function Register() {
     return (
         <div>
             <Container>
-                <Header register={true} />
-                <Form inputs={inputs} type={'register'} />
+                <Header link="/" register={true} />
+                <Form inputs={inputs} type={'register'} title />
             </Container>
         </div>
     );
