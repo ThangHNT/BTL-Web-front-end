@@ -7,6 +7,7 @@ import Admin from '~/pages/Admin';
 import NotFound from '~/pages/NotFound';
 import BookDetail from '~/pages/BookDetail';
 import Order from '~/pages/Order';
+import Cart from '~/pages/Cart';
 
 function App() {
     return (
@@ -22,6 +23,9 @@ function App() {
                         <Route path="order">
                             <Route path=":bookId" element={<Order />} />
                         </Route>
+                    </Route>
+                    <Route path="/user">
+                        <Route path="cart" element={<Cart />} />
                     </Route>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
