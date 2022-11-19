@@ -7,7 +7,13 @@ import styles from './Header.module.scss';
 import Image from '~/components/Image';
 import Search from '~/components/Search';
 import Button from '~/components/Button';
-import { faRightFromBracket, faRightToBracket, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+    faCartShopping,
+    faRightFromBracket,
+    faRightToBracket,
+    faUser,
+    faUserPlus,
+} from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -39,6 +45,16 @@ function Header({ link = true, title = false, currentUser = false, login = false
                                 <div className={cx('btn-item')}>
                                     <Button to="/account" secondary medium icon={<FontAwesomeIcon icon={faUser} />}>
                                         Tài khoản
+                                    </Button>
+                                </div>
+                                <div className={cx('btn-item')}>
+                                    <Button
+                                        to="/user/cart"
+                                        secondary
+                                        medium
+                                        icon={<FontAwesomeIcon icon={faCartShopping} />}
+                                    >
+                                        Giỏ hàng
                                     </Button>
                                 </div>
                                 <div className={cx('btn-item')}>

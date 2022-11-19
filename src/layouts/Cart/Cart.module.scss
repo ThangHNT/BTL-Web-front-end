@@ -1,3 +1,47 @@
 .wrapper {
     margin-top: calc(var(--header-distance) + 20px);
+    width: 100%;
+}
+
+.purchased-books {
+    width: 100%;
+}
+
+.purchased-books-item {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    border: 1px solid #444;
+}
+
+.book-info {
+    display: flex;
+    align-items: center;
+    color: #000;
+    text-decoration: none;
+}
+
+.book-title-author-price {
+    margin-left: 20px;
+    color: var(--basic);
+}
+
+.buy-history {
+    position: absolute;
+    left: 0;
+    top: 80px;
+    width: 100%;
+}
+
+.view-history-btn {
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    color: var(--secondary);
+
+    span {
+        margin-right: 10px;
+    }
 }

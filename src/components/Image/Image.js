@@ -5,7 +5,17 @@ import styles from './Image.module.scss';
 const cx = classNames.bind(styles);
 
 function Image(
-    { src, alt = '', rounded = false, book = false, coverImgae = false, avatar = false, circle = false, logo = false },
+    {
+        src,
+        alt = '',
+        border = false,
+        book = false,
+        coverImgae = false,
+        avatar = false,
+        circle = false,
+        logo = false,
+        bookCart = false,
+    },
     ref,
 ) {
     const imageRef = useRef();
@@ -17,12 +27,13 @@ function Image(
     }));
 
     const classes = cx('wrapper', {
-        rounded,
+        border,
         circle,
         logo,
         avatar,
         coverImgae,
         book,
+        bookCart,
     });
 
     return <img ref={imageRef} className={classes} src={src} alt={alt}></img>;
