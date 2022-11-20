@@ -9,15 +9,13 @@ import { BookProvider } from '~/components/context/BookContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
-        <GlobalStyles>
-            <UserProvider>
-                <BookProvider>
-                    <App />
-                </BookProvider>
-            </UserProvider>
-        </GlobalStyles>
-    </React.StrictMode>,
+    <GlobalStyles>
+        <UserProvider>
+            <BookProvider>
+                <App />
+            </BookProvider>
+        </UserProvider>
+    </GlobalStyles>,
 );
 
 // If you want to start measuring performance in your app, pass a function
