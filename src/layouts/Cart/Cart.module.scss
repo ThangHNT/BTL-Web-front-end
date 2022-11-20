@@ -1,3 +1,15 @@
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.column {
+    width: 12.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .wrapper {
     margin-top: calc(var(--header-distance) + 20px);
     width: 100%;
@@ -11,9 +23,22 @@
     position: relative;
     width: 100%;
     display: flex;
-    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     padding: 0 30px;
-    border: 1px solid #444;
+    // border: 1px solid #ccc;
+}
+
+.purchased-books-item + .purchased-books-item {
+    margin-top: 15px;
+}
+
+.book-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    z-index: 2;
 }
 
 .book-info {
@@ -26,20 +51,56 @@
 .book-title-author-price {
     margin-left: 20px;
     color: var(--basic);
+    font-size: 15px;
 }
 
-.buy-history {
-    position: absolute;
-    left: 0;
-    top: 80px;
+.buy-history-table {
     width: 100%;
+    margin-top: 10px;
+    animation: displayHistory 0.25s linear;
+}
+
+@keyframes displayHistory {
+    from {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.buy-history-header {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.buy-history-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.buy-history-item + .buy-history-item {
+    margin-top: 10px;
+}
+
+.column-name {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.order-info {
+    font-size: 14px;
+    padding-right: 4px;
 }
 
 .view-history-btn {
-    position: absolute;
-    right: 20px;
+    display: flex;
+    align-items: center;
     cursor: pointer;
     color: var(--secondary);
+    user-select: none;
 
     span {
         margin-right: 10px;

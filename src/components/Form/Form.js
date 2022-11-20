@@ -24,15 +24,13 @@ function Form({ inputs, type, payment = false, otherValues = false, title = fals
             } else {
                 formData = { ...userInfo };
             }
-            // console.log(otherValues);
             const { data } = await axios.post(`${host}/${path}`, formData);
             if (data.status) {
-                // console.log(data);
                 if (type === 'register') {
                     toast.success('Đăng ký thành công.Chuyển hướng đến trang chủ.');
                     localStorage.setItem('user', JSON.stringify(data.newUser));
                     handleNavigate('home');
-                } else if (type === 'register') {
+                } else if (type === 'login') {
                     toast.success('Chuyển hướng đến trang chủ.');
                     localStorage.setItem('user', JSON.stringify(data.user));
                     handleNavigate('home');
@@ -54,10 +52,22 @@ function Form({ inputs, type, payment = false, otherValues = false, title = fals
 
     const handleChangeInput = (e) => {
         let target = e.target;
-        setUserInfo((pre) => {
-            pre[target.name] = target.value;
-            return { ...pre };
-        });
+        if (target.type !== 'file') {
+            setUserInfo((pre) => {
+                pre[target.name] = target.value;
+                return { ...pre };
+            });
+        } else {
+            const reader = new FileReader();
+            reader.readAsDataURL(target.files[0]);
+            reader.onload = () => {
+                let dataUrl = reader.result;
+                setUserInfo((pre) => {
+                    pre[target.name] = dataUrl;
+                    return { ...pre };
+                });
+            };
+        }
     };
 
     const handleCheckInputs = (type) => {

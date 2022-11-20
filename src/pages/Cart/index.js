@@ -23,7 +23,7 @@ function CartPage() {
     return (
         <Container>
             <Header link="/home" title currentUser={currentUser}></Header>
-            <Cart />
+            <Cart currentUser={currentUser} />
             <Footer />
         </Container>
     );

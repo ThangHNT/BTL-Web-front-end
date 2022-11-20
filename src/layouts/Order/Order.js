@@ -133,7 +133,7 @@ function Payment({ currentUser }) {
                                 date: new Date().getTime(),
                             }}
                             type="order-book"
-                            path={`book/order/${bookIdRef.current}`}
+                            path={`user/order/${bookIdRef.current}`}
                         ></Form>
                     </div>
                 </div>
