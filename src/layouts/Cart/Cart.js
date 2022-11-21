@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from 'react';
+import { useState, useEffect, useContext, useRef, memo } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import host from '~/ulties/host';
@@ -180,4 +180,4 @@ function Cart() {
     );
 }
 
-export default Cart;
+export default memo(Cart);

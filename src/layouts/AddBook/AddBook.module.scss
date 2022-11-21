@@ -1,0 +1,60 @@
+.wrapper {
+    margin-top: var(--header-distance);
+    width: 100%;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.row + .row {
+    margin-top: 20px;
+}
+
+.column {
+    width: 40%;
+}
+
+.form {
+    width: 100%;
+}
+
+.input-fields {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.text-input {
+    width: 60%;
+}
+
+.header-title {
+    margin-bottom: 15px;
+}
+
+.file-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.select-img-btn {
+    position: relative;
+    margin-top: 20px;
+    overflow: hidden;
+
+    .select-img-input {
+        position: absolute;
+        transform: scale(2);
+        opacity: 0;
+        cursor: pointer;
+    }
+}
+
+.action-btn {
+    margin-top: 30px;
+}
