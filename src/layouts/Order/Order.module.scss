@@ -5,13 +5,15 @@
 .body {
     display: flex;
     align-items: flex-start;
+    justify-content: center;
 }
 
 .book {
-    width: 50%;
+    min-width: 50%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: center;
 }
 
 .book-info {
@@ -44,6 +46,6 @@
     }
 }
 
-.payment-area {
-    // width: 50%;
+.order-area {
+    min-width: 70%;
 }

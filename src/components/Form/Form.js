@@ -11,7 +11,7 @@ import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
-function Form({ inputs, type, payment = false, otherValues = false, title = false, path }) {
+function Form({ inputs, type, order = false, otherValues = false, title = false, path }) {
     const [userInfo, setUserInfo] = useState({});
     const navigate = useNavigate();
 
@@ -88,13 +88,15 @@ function Form({ inputs, type, payment = false, otherValues = false, title = fals
     };
 
     return (
-        <form className={cx('wrapper', { payment })} onSubmit={handleSubmit}>
+        <form className={cx('wrapper', { order })} onSubmit={handleSubmit}>
             {title && <span className={cx('title')}>{type}</span>}
-            <div className={cx('content', { payment })}>
+            <div className={cx('content', { order })}>
                 {inputs.map((input, index) => (
                     <div key={index} className={cx('input-item')}>
                         <Input
                             border
+                            textArea={input.textArea}
+                            rows={input.rows}
                             type={input.type}
                             label={input.label}
                             placeholder={input.placeholder}

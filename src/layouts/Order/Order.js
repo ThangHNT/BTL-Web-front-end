@@ -36,8 +36,10 @@ const inputs = [
         type: 'text',
         label: 'Địa chỉ',
         name: 'address',
-        maxlength: 50,
+        maxlength: 100,
         required: true,
+        textArea: true,
+        rows: 5,
     },
 ];
 
@@ -122,9 +124,9 @@ function Payment({ currentUser }) {
                             <p>{order.totalPrice} VND</p>
                         </div>
                     </div>
-                    <div className={cx('payment-area')}>
+                    <div className={cx('order-area')}>
                         <Form
-                            payment
+                            order
                             inputs={inputs}
                             otherValues={{
                                 quantity: order.quantity,

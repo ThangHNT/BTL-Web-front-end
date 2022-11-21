@@ -46,18 +46,14 @@ function Cart() {
     const cancelOrder = async () => {
         const { data } = await axios.post(`${host}/user/order-cancel/${orderItemRef.current.orderId}`);
         if (data.status) {
-            console.log(cartItemRef.current, orderItemRef.current.orderIndex);
             setCart((pre) => {
-                pre[cartItemRef.current].purchaseHistory = pre[cartItemRef.current].purchaseHistory.splice(
-                    orderItemRef.current.orderIndex,
-                    1,
-                );
+                pre[cartItemRef.current].purchaseHistory.splice(orderItemRef.current.orderIndex, 1);
                 return [...pre];
             });
-            // handleSetConfirmCancelOrder(false);
-            // setTimeout(() => {
-            //     toast.success('Hủy đơn thành công.');
-            // }, 500);
+            handleSetConfirmCancelOrder(false);
+            setTimeout(() => {
+                toast.success('Hủy đơn thành công.');
+            }, 100);
         }
     };
 
@@ -68,15 +64,14 @@ function Cart() {
         cartItemRef.current = Number(cartItem);
         orderItemRef.current.orderId = orderId;
         orderItemRef.current.orderIndex = Number(orderIndex);
-        cancelOrder();
         // console.log(cartItem, orderIndex, orderId);
-        // handleSetConfirmCancelOrder({
-        //     title: 'Hủy Đơn Hàng',
-        //     content: 'Bạn chắc chắn muốn hủy đơn này ?',
-        //     rejectBtn: 'Không',
-        //     acceptBtn: 'Xác nhận',
-        // action: cancelOrder,
-        // });
+        handleSetConfirmCancelOrder({
+            title: 'Hủy Đơn Hàng',
+            content: 'Bạn chắc chắn muốn hủy đơn này ?',
+            rejectBtn: 'Không',
+            acceptBtn: 'Xác nhận',
+            action: cancelOrder,
+        });
     };
 
     return (
@@ -86,7 +81,7 @@ function Cart() {
                     {cart.map((cart, cartIndex) => (
                         <div key={cartIndex} className={cx('purchased-books-item')}>
                             <div className={cx('book-wrapper')}>
-                                <Link to="#" className={cx('book-info')}>
+                                <Link to={`/book/detail/${cart.bookInfo.bookId}`} className={cx('book-info')}>
                                     <Image bookCart border src={cart.bookInfo.coverImage} alt="cover image" />
                                     <div className={cx('book-title-author-price')}>
                                         <p className={cx('book-title')}>Tác phẩm: {cart.bookInfo.title}</p>
