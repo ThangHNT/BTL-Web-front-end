@@ -9,13 +9,15 @@ import { BookContext } from '~/components/context/BookContext';
 const cx = classNames.bind(styles);
 
 function Modal() {
-    const { confirmLoginToBuy } = useContext(BookContext);
+    const { confirmLoginToBuy, confirmCancelOrder } = useContext(BookContext);
     const [modal, setModal] = useState();
 
     useEffect(() => {
-        if (confirmLoginToBuy) {
-            setModal(confirmLoginToBuy);
-        }
+        setModal(confirmCancelOrder);
+    }, [confirmCancelOrder]);
+
+    useEffect(() => {
+        setModal(confirmLoginToBuy);
     }, [confirmLoginToBuy]);
 
     const handleCloseModal = () => {
@@ -29,7 +31,7 @@ function Modal() {
                     <div className={cx('overlay')}></div>
                     <div className={cx('body')}>
                         <div className={cx('header')}>
-                            <p className={cx('title')}>Thanh toan</p>
+                            <p className={cx('title')}>{modal.title}</p>
                             <div className={cx('close-modal-btn')} onClick={handleCloseModal}>
                                 <FontAwesomeIcon className={cx('close-icon')} icon={faXmark} />
                             </div>

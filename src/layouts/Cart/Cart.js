@@ -1,18 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import host from '~/ulties/host';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer, toast } from 'react-toastify';
 import classNames from 'classnames/bind';
 import styles from './Cart.module.scss';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import Image from '~/components/Image';
+import formatTime from '~/ulties/formatTime';
+import Modal from '~/layouts/Modal';
+import { BookContext } from '~/components/context/BookContext';
 
 const cx = classNames.bind(styles);
 
 function Cart() {
+    const { handleSetConfirmCancelOrder } = useContext(BookContext);
     const [showHistory, setShowHistory] = useState(false);
     const [cart, setCart] = useState();
+    const orderItemRef = useRef({ orderId: '', orderIndex: '' });
+    const cartItemRef = useRef();
 
     useEffect(() => {
         let user = JSON.parse(localStorage.getItem('user'));
@@ -27,16 +34,57 @@ function Cart() {
             });
     }, []);
 
-    const handleShowHistory = () => {
-        setShowHistory((pre) => !pre);
+    const handleShowHistory = (e) => {
+        let index = Number(e.currentTarget.getAttribute('index'));
+        setShowHistory((pre) => {
+            if (pre === index) pre = false;
+            else pre = index;
+            return pre;
+        });
+    };
+
+    const cancelOrder = async () => {
+        const { data } = await axios.post(`${host}/user/order-cancel/${orderItemRef.current.orderId}`);
+        if (data.status) {
+            console.log(cartItemRef.current, orderItemRef.current.orderIndex);
+            setCart((pre) => {
+                pre[cartItemRef.current].purchaseHistory = pre[cartItemRef.current].purchaseHistory.splice(
+                    orderItemRef.current.orderIndex,
+                    1,
+                );
+                return [...pre];
+            });
+            // handleSetConfirmCancelOrder(false);
+            // setTimeout(() => {
+            //     toast.success('Hủy đơn thành công.');
+            // }, 500);
+        }
+    };
+
+    const handleClickCancelOrder = (e) => {
+        let orderId = e.currentTarget.getAttribute('orderid');
+        let orderIndex = e.currentTarget.getAttribute('orderindex');
+        let cartItem = e.currentTarget.getAttribute('cartitem');
+        cartItemRef.current = Number(cartItem);
+        orderItemRef.current.orderId = orderId;
+        orderItemRef.current.orderIndex = Number(orderIndex);
+        cancelOrder();
+        // console.log(cartItem, orderIndex, orderId);
+        // handleSetConfirmCancelOrder({
+        //     title: 'Hủy Đơn Hàng',
+        //     content: 'Bạn chắc chắn muốn hủy đơn này ?',
+        //     rejectBtn: 'Không',
+        //     acceptBtn: 'Xác nhận',
+        // action: cancelOrder,
+        // });
     };
 
     return (
         <div className={cx('wrapper')}>
             {cart && (
                 <div className={cx('purchased-books')}>
-                    {cart.map((cart, index) => (
-                        <div key={index} className={cx('purchased-books-item')}>
+                    {cart.map((cart, cartIndex) => (
+                        <div key={cartIndex} className={cx('purchased-books-item')}>
                             <div className={cx('book-wrapper')}>
                                 <Link to="#" className={cx('book-info')}>
                                     <Image bookCart border src={cart.bookInfo.coverImage} alt="cover image" />
@@ -46,12 +94,12 @@ function Cart() {
                                         <p className={cx('book-price')}>{cart.bookInfo.price} VND</p>
                                     </div>
                                 </Link>
-                                <div index={index} className={cx('view-history-btn')} onClick={handleShowHistory}>
+                                <div index={cartIndex} className={cx('view-history-btn')} onClick={handleShowHistory}>
                                     <span>Lịch sử đặt hàng</span>
-                                    <FontAwesomeIcon icon={showHistory === false ? faChevronUp : faChevronDown} />
+                                    <FontAwesomeIcon icon={showHistory !== cartIndex ? faChevronUp : faChevronDown} />
                                 </div>
                             </div>
-                            {showHistory && (
+                            {showHistory === cartIndex && (
                                 <div className={cx('buy-history-table')}>
                                     <div className={cx('buy-history-header')}>
                                         <div className={cx('row')}>
@@ -91,7 +139,7 @@ function Cart() {
                                                     <p className={cx('order-info')}>{history.phoneNumber}</p>
                                                 </div>
                                                 <div className={cx('column')}>
-                                                    <p className={cx('order-info')}>{history.date}</p>
+                                                    <p className={cx('order-info')}>{formatTime(history.date)}</p>
                                                 </div>
                                                 <div className={cx('column')}>
                                                     <p className={cx('order-info')}>{history.quantity}</p>
@@ -102,6 +150,17 @@ function Cart() {
                                                 <div className={cx('column')}>
                                                     <p className={cx('order-info')}>Dang chuyen hang</p>
                                                 </div>
+                                                <div className={cx('column')}>
+                                                    <span
+                                                        cartitem={cartIndex}
+                                                        orderid={history.orderId}
+                                                        orderindex={index}
+                                                        className={cx('cancel-btn')}
+                                                        onClick={handleClickCancelOrder}
+                                                    >
+                                                        Hủy Đơn
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     ))}
@@ -111,6 +170,17 @@ function Cart() {
                     ))}
                 </div>
             )}
+            <Modal />
+            <ToastContainer
+                position="bottom-center"
+                autoClose={2500}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover={false}
+            />
         </div>
     );
 }

@@ -8,6 +8,7 @@ import classNames from 'classnames/bind';
 import styles from './Comment.module.scss';
 import Image from '~/components/Image';
 import { BookContext } from '~/components/context/BookContext';
+import formatTime from '~/ulties/formatTime';
 
 const cx = classNames.bind(styles);
 
@@ -50,16 +51,6 @@ function Comment({ bookId }) {
         }
     };
 
-    const handleFormatTime = (milisecond) => {
-        let date = new Date(Number(milisecond));
-        let day = date.getDate();
-        let month = date.getMonth() + 1;
-        let year = date.getFullYear();
-        let hour = date.getHours();
-        let minute = date.getMinutes();
-        return `${hour}:${minute} ${day}/${month}/${year}`;
-    };
-
     return (
         <div className={cx('wrapper')}>
             <span className={cx('title')}>Nhận xét</span>
@@ -84,7 +75,7 @@ function Comment({ bookId }) {
                                     placement="right"
                                     render={(attrs) => (
                                         <div className="comment-content-box" tabIndex="-1" {...attrs}>
-                                            {handleFormatTime(item.time)}
+                                            {formatTime(item.time)}
                                         </div>
                                     )}
                                 >
