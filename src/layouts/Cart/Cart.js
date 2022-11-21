@@ -15,7 +15,7 @@ import { BookContext } from '~/components/context/BookContext';
 const cx = classNames.bind(styles);
 
 function Cart() {
-    const { handleSetConfirmCancelOrder } = useContext(BookContext);
+    const { handleSetDisplayModal } = useContext(BookContext);
     const [showHistory, setShowHistory] = useState(false);
     const [cart, setCart] = useState();
     const orderItemRef = useRef({ orderId: '', orderIndex: '' });
@@ -50,7 +50,7 @@ function Cart() {
                 pre[cartItemRef.current].purchaseHistory.splice(orderItemRef.current.orderIndex, 1);
                 return [...pre];
             });
-            handleSetConfirmCancelOrder(false);
+            handleSetDisplayModal(false);
             setTimeout(() => {
                 toast.success('Hủy đơn thành công.');
             }, 100);
@@ -65,7 +65,7 @@ function Cart() {
         orderItemRef.current.orderId = orderId;
         orderItemRef.current.orderIndex = Number(orderIndex);
         // console.log(cartItem, orderIndex, orderId);
-        handleSetConfirmCancelOrder({
+        handleSetDisplayModal({
             title: 'Hủy Đơn Hàng',
             content: 'Bạn chắc chắn muốn hủy đơn này ?',
             rejectBtn: 'Không',

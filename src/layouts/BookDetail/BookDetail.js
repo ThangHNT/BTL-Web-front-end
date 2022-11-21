@@ -31,7 +31,7 @@ const emptyStarArr = [
 ];
 
 function BookDetail() {
-    const { handleSetNewComment, handleSetConfirmLoginToBuy } = useContext(BookContext);
+    const { handleSetNewComment, handleSetDisplayModal } = useContext(BookContext);
     const location = useLocation();
     const navigate = useNavigate();
     const [book, setBook] = useState();
@@ -126,7 +126,7 @@ function BookDetail() {
         if (currentUserRef.current) {
             navigate('/book/order/' + bookIdRef.current);
         } else {
-            handleSetConfirmLoginToBuy({
+            handleSetDisplayModal({
                 title: 'Thanh toán',
                 content: 'Bạn cần đăng nhập để mua sách',
                 rejectBtn: 'Hủy',

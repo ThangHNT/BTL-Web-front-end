@@ -9,16 +9,12 @@ import { BookContext } from '~/components/context/BookContext';
 const cx = classNames.bind(styles);
 
 function Modal() {
-    const { confirmLoginToBuy, confirmCancelOrder } = useContext(BookContext);
+    const { displayModal } = useContext(BookContext);
     const [modal, setModal] = useState();
 
     useEffect(() => {
-        setModal(confirmCancelOrder);
-    }, [confirmCancelOrder]);
-
-    useEffect(() => {
-        setModal(confirmLoginToBuy);
-    }, [confirmLoginToBuy]);
+        setModal(displayModal);
+    }, [displayModal]);
 
     const handleCloseModal = () => {
         setModal(false);

@@ -5,15 +5,10 @@ const BookContext = createContext();
 function BookProvider({ children }) {
     const [bookList, setBookList] = useState(new Map());
     const [newComment, setNewComment] = useState();
-    const [confirmLoginToBuy, setConfirmLoginToBuy] = useState(false);
-    const [confirmCancelOrder, setConfirmCancelOrder] = useState(false);
+    const [displayModal, setDisplayModal] = useState(false);
 
-    const handleSetConfirmCancelOrder = (data) => {
-        setConfirmCancelOrder(data);
-    };
-
-    const handleSetConfirmLoginToBuy = (data) => {
-        setConfirmLoginToBuy(data);
+    const handleSetDisplayModal = (data) => {
+        setDisplayModal(data);
     };
 
     const handleSetNewComment = (comment) => {
@@ -41,10 +36,8 @@ function BookProvider({ children }) {
         handleSetBookList,
         newComment,
         handleSetNewComment,
-        confirmLoginToBuy,
-        handleSetConfirmLoginToBuy,
-        confirmCancelOrder,
-        handleSetConfirmCancelOrder,
+        displayModal,
+        handleSetDisplayModal,
     };
 
     return <BookContext.Provider value={values}>{children}</BookContext.Provider>;
