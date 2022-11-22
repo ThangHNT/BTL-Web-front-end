@@ -17,7 +17,6 @@ function BookItem({
     category,
     horizontal = false,
     button = false,
-    edit = false,
     remove = false,
 }) {
     let WRAPPER = Link;
@@ -43,13 +42,13 @@ function BookItem({
                             Xem
                         </Button>
                     </div>
-                    <div bookid={bookId} className={cx('btn-item')} onClick={edit}>
-                        <Button small border primary>
+                    <div bookid={bookId} className={cx('btn-item')}>
+                        <Button to={`/admin/edit-book/${bookId}`} small border primary>
                             Chỉnh sửa
                         </Button>
                     </div>
                     <div bookid={bookId} className={cx('btn-item')} onClick={remove}>
-                        <Button small border danger>
+                        <Button to="#" small border danger>
                             Xóa
                         </Button>
                     </div>

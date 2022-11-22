@@ -15,16 +15,12 @@ function Admin() {
         axios
             .get(`${host}/book/get/all-book`)
             .then(({ data }) => {
-                console.log(data);
+                // console.log(data);
                 setBooks(data.books);
             })
             .catch((err) => console.log('loi get all book at admin page'));
     }, []);
 
-    const handleEditBook = (e) => {
-        let bookId = e.currentTarget.getAttribute('bookid');
-        console.log('edit book', bookId);
-    };
     const handleDeleteBook = () => {
         console.log('delete book');
     };
@@ -49,7 +45,6 @@ function Admin() {
                                     bookCart
                                     button
                                     bookId={book._id}
-                                    edit={handleEditBook}
                                     remove={handleDeleteBook}
                                 />
                             </div>

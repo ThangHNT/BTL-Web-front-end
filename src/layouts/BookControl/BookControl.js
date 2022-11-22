@@ -1,4 +1,5 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import axios from 'axios';
 import host from '~/ulties/host';
@@ -10,12 +11,23 @@ import Image from '~/components/Image';
 
 const cx = classNames.bind(styles);
 
-function AddBook() {
-    const [inputValues, setInputValues] = useState({});
+function AddBook({ add = false, edit = false }) {
+    const [inputValues, setInputValues] = useState({
+        title: '',
+        author: '',
+        description: '',
+        numberOfPage: '',
+        category: '',
+        releaseDate: '',
+        price: '',
+        quantity: '',
+    });
 
     const navigate = useNavigate();
+    const location = useLocation();
     const coverImageRef = useRef();
     const formRef = useRef();
+    const bookIdRef = useRef(location.pathname.split('/')[3]);
 
     useLayoutEffect(() => {
         let user = JSON.parse(localStorage.getItem('user'));
@@ -27,6 +39,19 @@ function AddBook() {
                     navigate('/home');
                 }
             });
+        }
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        if (edit) {
+            axios
+                .get(`${host}/book/detail/${bookIdRef.current}`)
+                .then(({ data }) => {
+                    // console.log(data.book);
+                    setInputValues(data.book);
+                })
+                .catch((err) => console.log(err));
         }
         // eslint-disable-next-line
     }, []);
@@ -56,11 +81,22 @@ function AddBook() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { data } = await axios.post(`${host}/book/add`, inputValues);
-        if (data.status) {
-            alert('Them moi sach thanh cong');
+        console.log(inputValues);
+        if (edit) {
+            const { data } = await axios.put(`${host}/book/edit/${bookIdRef.current}`, inputValues);
+            // console.log(data);
+            if (data.status) {
+                console.log('Chinh sua sach thanh cong');
+            } else {
+                console.log('Loi sua sach');
+            }
         } else {
-            alert('Loi them moi sach');
+            const { data } = await axios.post(`${host}/book/add`, inputValues);
+            if (data.status) {
+                alert('Them moi sach thanh cong');
+            } else {
+                alert('Loi them moi sach');
+            }
         }
     };
 
@@ -80,6 +116,7 @@ function AddBook() {
                                     autoComplete="off"
                                     required
                                     onChange={handleSetInputValue}
+                                    value={inputValues.title}
                                 />
                             </div>
                             <div className={cx('column')}>
@@ -91,6 +128,7 @@ function AddBook() {
                                     autoComplete="off"
                                     required
                                     onChange={handleSetInputValue}
+                                    value={inputValues.author}
                                 />
                             </div>
                         </div>
@@ -103,6 +141,7 @@ function AddBook() {
                                 name="description"
                                 border
                                 onChange={handleSetInputValue}
+                                value={inputValues.description}
                             />
                         </div>
                         <div className={cx('row')}>
@@ -115,6 +154,7 @@ function AddBook() {
                                     autoComplete="off"
                                     required
                                     onChange={handleSetInputValue}
+                                    value={inputValues.category}
                                 />
                             </div>
                             <div className={cx('column')}>
@@ -125,6 +165,7 @@ function AddBook() {
                                     border
                                     required
                                     onChange={handleSetInputValue}
+                                    value={inputValues.numberOfPage}
                                 />
                             </div>
                         </div>
@@ -138,6 +179,7 @@ function AddBook() {
                                     border
                                     required
                                     onChange={handleSetInputValue}
+                                    value={inputValues.releaseDate}
                                 />
                             </div>
                             <div className={cx('column')}>
@@ -149,6 +191,7 @@ function AddBook() {
                                     border
                                     required
                                     onChange={handleSetInputValue}
+                                    value={inputValues.price}
                                 />
                             </div>
                         </div>
@@ -162,12 +205,18 @@ function AddBook() {
                                     border
                                     required
                                     onChange={handleSetInputValue}
+                                    value={inputValues.quantity}
                                 />
                             </div>
                         </div>
                     </div>
                     <div className={cx('file-input')}>
-                        <Image ref={coverImageRef} coverImgae src="/default-image.png" alt="cover-image" />
+                        <Image
+                            ref={coverImageRef}
+                            coverImgae
+                            src={add ? '/default-image.png' : inputValues.coverImage}
+                            alt="cover-image"
+                        />
                         <div className={cx('select-img-btn')}>
                             <Button secondary border medium type="button">
                                 Chọn ảnh
@@ -176,7 +225,7 @@ function AddBook() {
                                     className={cx('select-img-input')}
                                     onChange={handleSelectImage}
                                     name="coverImage"
-                                    required
+                                    required={inputValues.coverImage ? false : true}
                                 />
                             </Button>
                         </div>
@@ -184,7 +233,7 @@ function AddBook() {
                 </div>
                 <div className={cx('action-btn')}>
                     <Button type="submit" primary large border>
-                        Thêm mới
+                        {add ? 'Thêm mới' : 'Chỉnh sửa'}
                     </Button>
                 </div>
             </form>

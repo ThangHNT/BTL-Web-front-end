@@ -8,6 +8,8 @@ import NotFound from '~/pages/NotFound';
 import BookDetail from '~/pages/BookDetail';
 import Order from '~/pages/Order';
 import Cart from '~/pages/Cart';
+import AddBook from '~/pages/AddBook';
+import EditBook from '~/pages/EditBook';
 
 function App() {
     return (
@@ -29,7 +31,13 @@ function App() {
                     </Route>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/admin" element={<Admin />} />
+                    <Route path="/admin">
+                        <Route index path="" element={<Admin />} />
+                        <Route path="add-book" element={<AddBook />} />
+                        <Route path="edit-book">
+                            <Route path=":bookId" element={<EditBook />} />
+                        </Route>
+                    </Route>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>
