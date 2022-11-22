@@ -1,30 +1,61 @@
-import { memo, useContext } from 'react';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './BookItem.module.scss';
 import Image from '~/components/Image';
-import { BookContext } from '~/components/context/BookContext';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
-function BookItem({ bookId, coverImage, author, title, category }) {
-    const { handleSetGetBookId } = useContext(BookContext);
+function BookItem({
+    bookId,
+    coverImage,
+    book = false,
+    bookCart = false,
+    author,
+    title,
+    category,
+    horizontal = false,
+    button = false,
+    edit = false,
+    remove = false,
+}) {
+    let WRAPPER = Link;
 
-    const handleGoBookDetailPage = () => {
-        handleSetGetBookId(bookId);
-    };
+    if (horizontal) {
+        WRAPPER = 'div';
+    }
 
     return (
-        <Link to={`/book/detail/${bookId}`} className={cx('wrapper')} onClick={handleGoBookDetailPage}>
+        <WRAPPER to={horizontal ? '' : `/book/detail/${bookId}`} className={cx('wrapper', { horizontal })}>
             <div className={cx('cover-image')}>
-                <Image book src={coverImage} />
+                <Image bookCart={bookCart} book={book} src={coverImage} />
             </div>
             <div className={cx('introduction')}>
-                <p className={cx('introduction-title')}>{title}</p>
-                <p className={cx('introduction-author')}>Tác giả: {author}</p>
-                <p className={cx('introduction-category')}>Thể loại: {category}</p>
+                <p className={cx('introduction-title', { horizontalTitle: horizontal })}>{title}</p>
+                <p className={cx('introduction-author', { horizontalAuthor: horizontal })}>Tác giả: {author}</p>
+                {category && <p className={cx('introduction-category')}>Thể loại: {category}</p>}
             </div>
-        </Link>
+            {button && (
+                <div className={cx('action-btns')}>
+                    <div className={cx('btn-item')}>
+                        <Button to={`/book/detail/${bookId}`} small border secondary>
+                            Xem
+                        </Button>
+                    </div>
+                    <div bookid={bookId} className={cx('btn-item')} onClick={edit}>
+                        <Button small border primary>
+                            Chỉnh sửa
+                        </Button>
+                    </div>
+                    <div bookid={bookId} className={cx('btn-item')} onClick={remove}>
+                        <Button small border danger>
+                            Xóa
+                        </Button>
+                    </div>
+                </div>
+            )}
+        </WRAPPER>
     );
 }
 

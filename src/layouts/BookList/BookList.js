@@ -37,6 +37,7 @@ function BookList() {
                             title={book.title}
                             author={book.author}
                             category={book.category}
+                            book
                         />
                     </div>
                 );

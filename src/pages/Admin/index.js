@@ -1,15 +1,17 @@
-import { useLayoutEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import host from '~/ulties/host';
 import { useNavigate } from 'react-router-dom';
 import Container from '~/layouts/Container';
 import Header from '~/layouts/Header';
-import AddBook from '~/layouts/AddBook';
+import Admin from '~/layouts/Admin';
+import Footer from '~/layouts/Footer';
 
-function Home() {
+function AdminPage() {
     const navigate = useNavigate();
+    const [currentUser, setCurrentUser] = useState();
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         let user = JSON.parse(localStorage.getItem('user'));
         if (!user) {
             navigate('/');
@@ -17,6 +19,8 @@ function Home() {
             axios.post(`${host}/user/check-admin`, { userId: user.userId }).then(({ data }) => {
                 if (!data.status) {
                     navigate('/home');
+                } else {
+                    setCurrentUser(user);
                 }
             });
         }
@@ -25,10 +29,11 @@ function Home() {
 
     return (
         <Container>
-            <Header link="/home"></Header>
-            <AddBook />
+            <Header link="/home" currentUser={currentUser}></Header>
+            <Admin />
+            <Footer />
         </Container>
     );
 }
 
-export default Home;
+export default AdminPage;

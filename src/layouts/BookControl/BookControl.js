@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import axios from 'axios';
 import host from '~/ulties/host';
-import styles from './AddBook.module.scss';
+import styles from './BookControl.module.scss';
 import { useNavigate } from 'react-router-dom';
 import Input from '~/components/Input';
 import Button from '~/components/Button';
