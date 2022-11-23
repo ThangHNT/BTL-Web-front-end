@@ -1,0 +1,26 @@
+.wrapper {
+    margin-top: var(--header-distance);
+}
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.main {
+    width: 100%;
+}
+
+.add-book-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.book-list {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.book-item + .book-item {
+    margin-top: 15px;
+}

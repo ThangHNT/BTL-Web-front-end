@@ -10,6 +10,7 @@ import Order from '~/pages/Order';
 import Cart from '~/pages/Cart';
 import AddBook from '~/pages/AddBook';
 import EditBook from '~/pages/EditBook';
+import Account from '~/pages/Account';
 
 function App() {
     return (
@@ -38,6 +39,7 @@ function App() {
                             <Route path=":bookId" element={<EditBook />} />
                         </Route>
                     </Route>
+                    <Route path="/account" element={<Account />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>
