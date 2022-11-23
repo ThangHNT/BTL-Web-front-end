@@ -8,6 +8,15 @@ function BookProvider({ children }) {
     const [displayModal, setDisplayModal] = useState(false);
 
     const handleSetDisplayModal = (data) => {
+        /*
+            data = {
+                title: title modal
+                content: nd thông báo
+                rejectBtn: text nút hủy bỏ
+                acceptBtn: text nút xác nhận/đồng ý
+                action: hàm thực hiện khi ấn accept
+            }
+        */
         setDisplayModal(data);
     };
 

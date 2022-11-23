@@ -42,13 +42,13 @@ function BookItem({
                             Xem
                         </Button>
                     </div>
-                    <div bookid={bookId} className={cx('btn-item')}>
+                    <div className={cx('btn-item')}>
                         <Button to={`/admin/edit-book/${bookId}`} small border primary>
                             Chỉnh sửa
                         </Button>
                     </div>
                     <div bookid={bookId} className={cx('btn-item')} onClick={remove}>
-                        <Button to="#" small border danger>
+                        <Button to="#" small border danger onClick={remove}>
                             Xóa
                         </Button>
                     </div>
