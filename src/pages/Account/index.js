@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import host from '~/ulties/host';
 import { useNavigate } from 'react-router-dom';
 import Header from '~/layouts/Header';
 import Container from '~/layouts/Container';
@@ -16,13 +14,7 @@ function AccountPage() {
         if (!user) {
             navigate('/');
         } else {
-            axios.post(`${host}/user/check-admin`, { userId: user.userId }).then(({ data }) => {
-                if (!data.status) {
-                    navigate('/home');
-                } else {
-                    setCurrentUser(user);
-                }
-            });
+            setCurrentUser(user);
         }
         // eslint-disable-next-line
     }, []);

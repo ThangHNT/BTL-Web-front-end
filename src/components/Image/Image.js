@@ -15,6 +15,7 @@ function Image(
         circle = false,
         logo = false,
         bookCart = false,
+        selectAvatar = false,
     },
     ref,
 ) {
@@ -34,6 +35,7 @@ function Image(
         coverImgae,
         book,
         bookCart,
+        selectAvatar,
     });
 
     return <img ref={imageRef} className={classes} src={src} alt={alt}></img>;

@@ -1,26 +1,65 @@
 .wrapper {
     margin-top: var(--header-distance);
-}
-.wrapper {
     display: flex;
+    align-items: center;
     width: 100%;
+    padding: 20px;
 }
 
-.main {
-    width: 100%;
+.avatar {
+    width: 40%;
 }
 
-.add-book-btn {
+.file-input {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
-.book-list {
-    width: 100%;
+.select-img-btn {
+    position: relative;
     margin-top: 20px;
+    overflow: hidden;
+
+    .select-img-input {
+        position: absolute;
+        transform: scale(2);
+        opacity: 0;
+        cursor: pointer;
+    }
 }
 
-.book-item + .book-item {
-    margin-top: 15px;
+.user-info {
+    width: 60%;
+    min-height: 400px;
+}
+
+.form {
+    width: 100%;
+    padding: 0 20px;
+}
+
+.form-item {
+    width: 80%;
+
+    .input-item + .input-item {
+        margin-top: 10px;
+    }
+}
+
+.form-item + .form-item {
+    margin-top: 30px;
+}
+
+.form-item-title {
+    font-size: 15px;
+    text-decoration: underline;
+    color: var(--secondary);
+    cursor: pointer;
+    user-select: none;
+}
+
+.submit-btn {
+    margin-top: 30px;
 }
