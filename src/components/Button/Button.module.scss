@@ -79,3 +79,12 @@
 .modal {
     padding: 10px 12px;
 }
+
+.disabled {
+    background-color: var(--basic);
+
+    &:hover {
+        cursor: not-allowed;
+        background-color: var(--basic);
+    }
+}

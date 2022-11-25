@@ -1,4 +1,4 @@
-import { useEffect, useState, memo, useRef } from 'react';
+import { useEffect, useState, memo, useRef, useContext } from 'react';
 import axios from 'axios';
 import host from '~/ulties/host';
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,63 +8,79 @@ import Button from '~/components/Button';
 import Modal from '~/layouts/Modal';
 import Image from '~/components/Image';
 import Input from '~/components/Input';
+import { UserContext } from '~/components/context/UserContext';
 
 const cx = classNames.bind(styles);
 
 function Admin() {
-    const [account, setAccount] = useState({
+    const { handleSetCurrentUser } = useContext(UserContext);
+    const [profile, setProfile] = useState({
         avatar: '',
         account: '',
         email: '',
         phoneNumber: '',
     });
 
+    const inputImgRef = useRef();
+
     useEffect(() => {
         let user = JSON.parse(localStorage.getItem('user'));
-        axios
-            .get(`${host}/user/account/${user.userId}`)
-            .then(({ data }) => {
-                // console.log(data.user);
-                setAccount(data.user);
-            })
-            .catch((err) => console.log(err));
+        if (user) {
+            axios
+                .get(`${host}/user/profile/${user.userId}`)
+                .then(({ data }) => {
+                    // console.log(data.user);
+                    data.user.password = false;
+                    setProfile(data.user);
+                })
+                .catch((err) => console.log(err));
+        }
     }, []);
 
-    useEffect(() => {
-        // console.log(account);
-    }, [account]);
-
     const handleSelectImage = (e) => {
-        console.log('select img');
+        let file = e.target.files[0];
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            let base64String = reader.result;
+            inputImgRef.src = base64String;
+            setProfile((pre) => {
+                pre.avatar = base64String;
+                return { ...pre };
+            });
+        };
     };
 
     const handleChangeInput = (e) => {
         let value = e.target.value;
         let name = e.target.getAttribute('name');
-        setAccount((pre) => {
+        setProfile((pre) => {
             pre[name] = value;
             return { ...pre };
         });
     };
 
     const handleCanChangePassword = () => {
-        setAccount((pre) => {
+        setProfile((pre) => {
             pre.password = !pre.password;
             return { ...pre };
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // console.log(account);
-        if (account.password) {
-            if (account.password !== account.confirmPassword) {
-                toast.warning('Mật khẩu không trùng khớp.');
-            } else if (account.password.length < 8) {
-                toast.warning('Mật khẩu yếu.');
-            }
-        } else if (account.phoneNumber.length < 9 || account.phoneNumber.length > 12) {
-            toast.warning('Số điện thoại chưa hợp lệ.');
+        const { data } = await axios.put(`${host}/user/profile/edit`, { profile });
+        let user = {
+            account: profile.account,
+            avatar: profile.avatar,
+            userId: profile.userId,
+        };
+        if (!data.status) {
+            toast.error(data.msg);
+        } else {
+            toast.success(data.msg);
+            localStorage.setItem('user', JSON.stringify(user));
+            handleSetCurrentUser(user);
         }
     };
 
@@ -72,11 +88,12 @@ function Admin() {
         <div className={cx('wrapper')}>
             <div className={cx('avatar')}>
                 <div className={cx('file-input')}>
-                    <Image src={account.avatar} alt="cover-image" selectAvatar />
+                    <Image src={profile.avatar} alt="cover-image" selectAvatar />
                     <div className={cx('select-img-btn')}>
                         <Button secondary border medium type="button">
                             Chọn ảnh
                             <input
+                                ref={inputImgRef}
                                 type="file"
                                 className={cx('select-img-input')}
                                 onChange={handleSelectImage}
@@ -89,30 +106,32 @@ function Admin() {
             <div className={cx('user-info')}>
                 <form className={cx('form')} onSubmit={handleSubmit}>
                     <div className={cx('form-item')}>
-                        <Input label="Tài khoản" noBorder disabled value={account.account} />
+                        <Input label="Tài khoản" noBorder disabled value={profile.account} />
                     </div>
                     <div className={cx('form-item')}>
                         <span className={cx('form-item-title')} onClick={handleCanChangePassword}>
                             Đổi mật khẩu
                         </span>
-                        {account.password && (
+                        {profile.password && (
                             <div>
                                 <div className={cx('input-item')}>
                                     <Input
-                                        name="confirmPassword"
+                                        name="oldPassword"
                                         type="password"
                                         border
                                         label="Mật khẩu cũ"
                                         onChange={handleChangeInput}
+                                        required={profile.password}
                                     />
                                 </div>
                                 <div className={cx('input-item')}>
                                     <Input
-                                        name="password"
+                                        name="newPassword"
                                         type="password"
                                         border
                                         label="Mật khẩu mới"
                                         onChange={handleChangeInput}
+                                        required={profile.password}
                                     />
                                 </div>
                             </div>
@@ -124,7 +143,7 @@ function Admin() {
                             type="number"
                             border
                             label="Số điện thoại"
-                            value={account.phoneNumber}
+                            value={profile.phoneNumber}
                             onChange={handleChangeInput}
                             required
                         />
@@ -135,7 +154,7 @@ function Admin() {
                             type="email"
                             border
                             label="Email"
-                            value={account.email}
+                            value={profile.email}
                             onChange={handleChangeInput}
                             required
                         />

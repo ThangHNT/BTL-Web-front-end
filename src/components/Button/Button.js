@@ -23,6 +23,7 @@ function Button({
     circle = false,
     border = false,
     modal = false,
+    disabled = false,
     ...passProps
 }) {
     let Btn = 'button';
@@ -47,6 +48,7 @@ function Button({
         border,
         danger,
         modal,
+        disabled,
     });
 
     return (
