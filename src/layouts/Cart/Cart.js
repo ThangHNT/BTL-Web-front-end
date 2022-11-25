@@ -81,7 +81,10 @@ function Cart() {
                     {cart.map((cart, cartIndex) => (
                         <div key={cartIndex} className={cx('purchased-books-item')}>
                             <div className={cx('book-wrapper')}>
-                                <Link to={`/book/detail/${cart.bookInfo.bookId}`} className={cx('book-info')}>
+                                <Link
+                                    to={cart.bookInfo.deleted ? '#' : `/book/detail/${cart.bookInfo.bookId}`}
+                                    className={cx('book-info')}
+                                >
                                     <Image bookCart border src={cart.bookInfo.coverImage} alt="cover image" />
                                     <div className={cx('book-title-author-price')}>
                                         <p className={cx('book-title')}>Tác phẩm: {cart.bookInfo.title}</p>

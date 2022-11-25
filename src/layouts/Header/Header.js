@@ -13,6 +13,7 @@ import {
     faRightToBracket,
     faUser,
     faUserPlus,
+    faUserTie,
 } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
@@ -57,6 +58,18 @@ function Header({ link = true, title = false, currentUser = false, login = false
                                         Giỏ hàng
                                     </Button>
                                 </div>
+                                {currentUser.admin && (
+                                    <div className={cx('btn-item')}>
+                                        <Button
+                                            to="/admin"
+                                            secondary
+                                            medium
+                                            icon={<FontAwesomeIcon icon={faUserTie} />}
+                                        >
+                                            Quản lý
+                                        </Button>
+                                    </div>
+                                )}
                                 <div className={cx('btn-item')}>
                                     <Button
                                         href="/login"

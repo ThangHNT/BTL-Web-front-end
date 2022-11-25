@@ -47,7 +47,7 @@ function Form({ inputs, type, order = false, otherValues = false, title = false,
     const handleNavigate = (path) => {
         setTimeout(() => {
             navigate(`/${path}`);
-        }, 2500);
+        }, 2000);
     };
 
     const handleChangeInput = (e) => {
@@ -117,7 +117,7 @@ function Form({ inputs, type, order = false, otherValues = false, title = false,
             </div>
             <ToastContainer
                 position="bottom-center"
-                autoClose={2500}
+                autoClose={2000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick

@@ -206,73 +206,75 @@ function BookDetail() {
                             </div>
                         </div>
                     </div>
-                    <div className={cx('user-actions')}>
-                        <div className={cx('buy-btn')}>
-                            {book.quantity < 1 ? (
-                                <span className={cx('sold-out')}>SÁCH ĐÃ BÁN HẾT</span>
-                            ) : (
-                                <Button border primary veryLarge onClick={handleConfirmLoginToBuy}>
-                                    Đặt mua ngay
-                                </Button>
-                            )}
-                        </div>
-                        <div className={cx('evaluate')}>
-                            <div className={cx('vote')}>
-                                <span className={cx('evaluate-title')}>Đánh giá</span>
-                                {fullStarRef.current.map((item, index) => {
-                                    return (
-                                        <div
-                                            key={index}
-                                            type="full-star"
-                                            index={index}
-                                            className={cx('star-item')}
-                                            onClick={handleChangeStarArr}
-                                        >
-                                            {item.star}
-                                        </div>
-                                    );
-                                })}
-                                {emptyStarRef.current.map((item, index) => {
-                                    return (
-                                        <div
-                                            key={index}
-                                            type="empty-star"
-                                            index={index}
-                                            className={cx('star-item')}
-                                            onClick={handleChangeStarArr}
-                                        >
-                                            {item.star}
-                                        </div>
-                                    );
-                                })}
+                    {!book.deleted && (
+                        <div className={cx('user-actions')}>
+                            <div className={cx('buy-btn')}>
+                                {book.quantity < 1 ? (
+                                    <span className={cx('sold-out')}>SÁCH ĐÃ BÁN HẾT</span>
+                                ) : (
+                                    <Button border primary veryLarge onClick={handleConfirmLoginToBuy}>
+                                        Đặt mua ngay
+                                    </Button>
+                                )}
                             </div>
-                            <div className={cx('comment')}>
-                                <div className={cx('write-comment')}>
-                                    <span className={cx('evaluate-title')}>Bình luận</span>
-                                    <div className={cx('input-comment')}>
-                                        <Input
-                                            value={commentContent}
-                                            border
-                                            rows="5"
-                                            maxLength="500"
-                                            textArea
-                                            onChange={handleChangeInput}
-                                        ></Input>
+                            <div className={cx('evaluate')}>
+                                <div className={cx('vote')}>
+                                    <span className={cx('evaluate-title')}>Đánh giá</span>
+                                    {fullStarRef.current.map((item, index) => {
+                                        return (
+                                            <div
+                                                key={index}
+                                                type="full-star"
+                                                index={index}
+                                                className={cx('star-item')}
+                                                onClick={handleChangeStarArr}
+                                            >
+                                                {item.star}
+                                            </div>
+                                        );
+                                    })}
+                                    {emptyStarRef.current.map((item, index) => {
+                                        return (
+                                            <div
+                                                key={index}
+                                                type="empty-star"
+                                                index={index}
+                                                className={cx('star-item')}
+                                                onClick={handleChangeStarArr}
+                                            >
+                                                {item.star}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                <div className={cx('comment')}>
+                                    <div className={cx('write-comment')}>
+                                        <span className={cx('evaluate-title')}>Bình luận</span>
+                                        <div className={cx('input-comment')}>
+                                            <Input
+                                                value={commentContent}
+                                                border
+                                                rows="5"
+                                                maxLength="500"
+                                                textArea
+                                                onChange={handleChangeInput}
+                                            ></Input>
+                                        </div>
+                                        {(commentContent || fullStarRef.current.length > 0) && (
+                                            <div className={cx('send-comment-btn')}>
+                                                <Button secondary border large onClick={handleSendEvaluate}>
+                                                    Gửi đánh giá và bình luận
+                                                </Button>
+                                            </div>
+                                        )}
                                     </div>
-                                    {(commentContent || fullStarRef.current.length > 0) && (
-                                        <div className={cx('send-comment-btn')}>
-                                            <Button secondary border large onClick={handleSendEvaluate}>
-                                                Gửi đánh giá và bình luận
-                                            </Button>
-                                        </div>
-                                    )}
-                                </div>
-                                <div className={cx('user-comments')}>
-                                    <Comment bookId={bookIdRef.current} />
+                                    <div className={cx('user-comments')}>
+                                        <Comment bookId={bookIdRef.current} />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             )}
         </div>
