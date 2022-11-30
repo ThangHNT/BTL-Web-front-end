@@ -18,13 +18,13 @@ function Cart() {
     const { handleSetDisplayModal } = useContext(BookContext);
     const [showHistory, setShowHistory] = useState(false);
     const [cart, setCart] = useState();
+    const currentUserRef = useRef(JSON.parse(localStorage.getItem('user')));
     const orderItemRef = useRef({ orderId: '', orderIndex: '' });
     const cartItemRef = useRef();
 
     useEffect(() => {
-        let user = JSON.parse(localStorage.getItem('user'));
         axios
-            .get(`${host}/user/cart/${user.userId}`)
+            .get(`${host}/user/cart/${currentUserRef.current.userId}`)
             .then(({ data }) => {
                 // console.log(data);
                 setCart(data.data);
@@ -44,7 +44,10 @@ function Cart() {
     };
 
     const cancelOrder = async () => {
-        const { data } = await axios.post(`${host}/user/order-cancel/${orderItemRef.current.orderId}`);
+        const { data } = await axios.post(`${host}/user/order-cancel`, {
+            orderId: orderItemRef.current.orderId,
+            userId: currentUserRef.current.userId,
+        });
         if (data.status) {
             setCart((pre) => {
                 pre[cartItemRef.current].purchaseHistory.splice(orderItemRef.current.orderIndex, 1);

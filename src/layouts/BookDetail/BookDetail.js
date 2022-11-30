@@ -160,24 +160,7 @@ function BookDetail() {
                             <div className={cx('detail-info-item')}>
                                 <p>
                                     <span className={cx('attribute')}>Mô tả: </span>
-                                    <span className={cx('description')}>
-                                        {book.description} Triết học là bộ môn nghiên cứu về những vấn đề chung và cơ
-                                        bản của con người, thế giới quan và vị trí của con người trong thế giới quan,
-                                        những vấn đề có kết nối với chân lý, sự tồn tại, kiến thức, giá trị, quy luật, ý
-                                        thức, và ngôn ngữ. Triết học được phân biệt với những môn khoa học khác bằng
-                                        cách thức mà nó giải quyết những vấn đề trên, đó là ở tính phê phán, phương pháp
-                                        tiếp cận có hệ thống chung nhất và sự phụ thuộc của nó vào tính duy lý trong
-                                        việc lập luận. Trong tiếng Anh, từ "philosophy" (triết học) xuất phát từ tiếng
-                                        Hy Lạp cổ đại φιλοσοφία (philosophia), có nghĩa là "tình yêu đối với sự thông
-                                        thái". Sự ra đời của các thuật ngữ "triết học" và "triết gia" được gắn với nhà
-                                        tư tưởng Hy Lạp Pythagoras. Một "nhà triết học" được hiểu theo nghĩa tương phản
-                                        với một "kẻ ngụy biện" (σοφιστής). Những "kẻ ngụy biện" hay "những người nghĩ
-                                        mình thông thái" có một vị trí quan trọng trong Hy Lạp cổ điển, được coi như
-                                        những nhà giáo, thường đi khắp nơi thuyết giảng về triết lý, nghệ thuật hùng
-                                        biện và các bộ môn khác cho những người có tiền, trong khi các "triết gia" là
-                                        "những người yêu thích sự thông thái" và do đó không sử dụng sự thông thái của
-                                        mình với mục đích chính là kiếm tiền.
-                                    </span>
+                                    <span className={cx('description')}>{book.description}</span>
                                 </p>
                             </div>
                             <div className={cx('detail-info-item')}>

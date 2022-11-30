@@ -44,6 +44,26 @@ function Form({ inputs, type, order = false, otherValues = false, title = false,
         }
     };
 
+    function handleCheckStrongPassword(password) {
+        var strength = 0;
+        if (password.match(/[a-z]+/)) {
+            strength += 1;
+        }
+        if (password.match(/[A-Z]+/)) {
+            strength += 1;
+        }
+        if (password.match(/[0-9]+/)) {
+            strength += 1;
+        }
+        if (password.match(/[$@#&!]+/)) {
+            strength += 1;
+        }
+        if (password.length < 8 || strength < 3) {
+            return false;
+        }
+        return true;
+    }
+
     const handleNavigate = (path) => {
         setTimeout(() => {
             navigate(`/${path}`);
@@ -72,12 +92,12 @@ function Form({ inputs, type, order = false, otherValues = false, title = false,
 
     const handleCheckInputs = (type) => {
         if (type === 'register') {
-            // if (userInfo.password.length < 8) {
-            //     toast.error('Mật khẩu yếu.');
-            //     return false;
-            // }
             if (userInfo.password !== userInfo.confirmPassword) {
-                toast.error('Mật khẩu chưa trùng khớp.');
+                toast.error('Mật khẩu không trùng khớp.');
+                return false;
+            }
+            if (!handleCheckStrongPassword(userInfo.password)) {
+                toast.error('Mật khẩu tối thiểu 8 ký tự, bao gồm chữ cái viết hoa, viết thường và số.');
                 return false;
             }
         } else if (type === 'order-book' && otherValues.quantity < 1) {
@@ -117,7 +137,7 @@ function Form({ inputs, type, order = false, otherValues = false, title = false,
             </div>
             <ToastContainer
                 position="bottom-center"
-                autoClose={2000}
+                autoClose={2500}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick

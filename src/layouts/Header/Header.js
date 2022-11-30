@@ -72,7 +72,7 @@ function Header({ link = true, title = false, currentUser = false, login = false
                                 )}
                                 <div className={cx('btn-item')}>
                                     <Button
-                                        href="/login"
+                                        href="/"
                                         secondary
                                         medium
                                         icon={<FontAwesomeIcon icon={faRightFromBracket} />}

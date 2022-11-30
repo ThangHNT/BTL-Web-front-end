@@ -94,6 +94,7 @@ function AddBook({ add = false, edit = false }) {
             const { data } = await axios.post(`${host}/book/add`, inputValues);
             if (data.status) {
                 alert('Them moi sach thanh cong');
+                window.location.reload();
             } else {
                 alert('Loi them moi sach');
             }
